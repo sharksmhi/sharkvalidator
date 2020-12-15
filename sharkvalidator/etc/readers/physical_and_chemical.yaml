@@ -1,0 +1,5 @@
+description: Reader for xlsx files according to the national datahost format
+name: phyche_reader
+meta:
+    synonym_separator: ";"
+reader: !!python/name:sharkvalidator.readers.phyche.PhysicalChemicalExcelReader ''
