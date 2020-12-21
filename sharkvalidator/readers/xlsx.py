@@ -27,6 +27,18 @@ class PandasReaderBase:
             return 'None'
 
     @staticmethod
+    def activate_file(*args, **kwargs):
+        """
+        xl = pd.ExcelFile('foo.xls')
+        xl.sheet_names  # see all sheet names
+        xl.parse(sheet_name)  # read a specific sheet to DataFrame
+        :param args:
+        :param kwargs:
+        :return:
+        """
+        return pd.ExcelFile(*args, **kwargs)
+
+    @staticmethod
     def read(*args, **kwargs):
         """
         :param args: tuple
@@ -45,7 +57,7 @@ class PandasReaderBase:
 
 class PandasXlsxReader(PandasReaderBase):
     """
-    Reads txt / csv files
+    Reads xlsx files
     """
     def __init__(self, *args, **kwargs):
         super(PandasXlsxReader, self).__init__()

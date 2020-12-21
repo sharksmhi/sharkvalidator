@@ -1,0 +1,8 @@
+description: Check for mandatory sheets in delivery file.
+name: mandatory_sheets
+validator: !!python/name:sharkvalidator.validators.formats.ExcelDeliveryFormat ''
+sheets:
+  - "Förklaring"
+  - Kolumner
+  - Analysinfo
+  - Provtagningsinfo
