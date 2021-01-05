@@ -27,7 +27,7 @@ class PandasReaderBase:
             return 'None'
 
     @staticmethod
-    def activate_file(*args, **kwargs):
+    def _activate_file(*args, **kwargs):
         """
         xl = pd.ExcelFile('foo.xls')
         xl.sheet_names  # see all sheet names

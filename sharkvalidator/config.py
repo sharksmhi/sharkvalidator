@@ -78,8 +78,6 @@ class Settings(SettingsBase):
         etc_path = os.path.join(self.base_directory, 'etc')
         self._load_settings(etc_path)
 
-        self.attributes = kwargs.get('attributes') or self.default_attributes
-
     def _load_settings(self, etc_path):
         """
         Loading all .yaml files from etc directory.
@@ -125,11 +123,12 @@ class Settings(SettingsBase):
         We need a specific order when validating. sweref is master and the other validators depend on it!
         :return: list
         """
-        lst = ['coordinates_sweref', 'coordinates_dd']
-        for l in self.validators:
-            if l not in lst:
-                lst.append(l)
-        return lst
+        return sorted(self.validators)
+        # lst = ['coordinates_sweref', 'coordinates_dd']
+        # for l in self.validators:
+        #     if l not in lst:
+        #         lst.append(l)
+        # return lst
 
     def get_export_file_path(self, **kwargs):
         """
@@ -142,7 +141,7 @@ class Settings(SettingsBase):
             else:
                 raise Warning('file_path given, but it´s not valid.')
 
-        target_path = 'C:/station_exports'
+        target_path = 'C:/shark_validation_export'
         if os.path.isdir('C:/'):
             if not os.path.isdir(target_path):
                 os.mkdir(target_path)
@@ -155,5 +154,4 @@ class Settings(SettingsBase):
 
 
 if __name__ == '__main__':
-
     settings = Settings()

@@ -24,8 +24,7 @@ class ExcelDeliveryFormat(Validator):
         :param kwargs:
         :return:
         """
-        assert self.reader
-        assert self.sheets
+        assert self.elements
 
         report = {'approved': {},
                   'disapproved': {}}

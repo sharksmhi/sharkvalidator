@@ -14,6 +14,10 @@ from pyproj import Proj, CRS, transform
 from decimal import Decimal, ROUND_HALF_UP
 
 
+class string(str):
+    def __call__(self):
+        return str
+
 def decmin_to_decdeg(pos, string_type=True, decimals=4):
     """
     :param pos: str, Position in format DDMM.mm (Degrees + decimal minutes)
