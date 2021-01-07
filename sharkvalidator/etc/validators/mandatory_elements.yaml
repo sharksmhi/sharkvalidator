@@ -1,0 +1,8 @@
+description: Check for mandatory data elements in delivery (eg. delivery_note, analyse_info, sampling_info, data).
+name: mandatory_elements
+validator: !!python/name:sharkvalidator.validators.formats.PhysicalChemicalFormat ''
+elements:
+  - delivery_note
+  - data
+  - analyse_info
+  - sampling_info

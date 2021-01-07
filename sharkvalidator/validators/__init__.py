@@ -1,1 +1,1 @@
-from sharkvalidator.validators.formats import ExcelDeliveryFormat
+from sharkvalidator.validators.formats import PhysicalChemicalFormat

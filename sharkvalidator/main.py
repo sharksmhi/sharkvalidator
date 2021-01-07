@@ -22,42 +22,24 @@ class App:
         self.deliveries = MultiDeliveries()
 
     def validate(self, *args, **kwargs):
-        """
-        :param args:
-            Expects:
-                list_name(s)
-        :param kwargs:
-            Addition:
-                validator_list
-        :return:
-        """
+        """"""
         validator_list = kwargs.get('validator_list') or self.settings.validators_sorted
-        for list_name in args:
+        for delivery_name in args:
             for validator_name in validator_list:
                 validator = self.settings.load_validator(validator_name)
-                validator.validate(self.lists.select(list_name), master=self.lists.select('master'))
+                validator.validate(self.deliveries.select(delivery_name))
 
     def read(self, *args, **kwargs):
-        """
-        :param args: tuple
-            Expects:
-                file_path
-        :param kwargs: dict
-            Expects:
-                reader
-        :return:
-        """
+        """"""
         assert 'reader' in kwargs
         assert args
 
-        reader = self.settings.load_reader(kwargs.get('reader'))
-        delivery_name = kwargs.get('delivery_name')
-        for pop_key in ('delivery_name', 'reader'):
-            kwargs.pop(pop_key)
+        reader = self.settings.load_reader(kwargs.pop('reader'))
+        delivery_name = kwargs.pop('delivery_name')
 
         reader.load(*args, **kwargs)
 
-        dfs = DataFrames()
+        dfs = DataFrames(data_type=reader.get('data_type'))
         for element, item in reader.elements.items():
             df = reader.read_element(item.pop('element_specifier'), **item)
             dfs.append_new_frame(name=element, data=df)
@@ -73,7 +55,7 @@ if __name__ == '__main__':
     app.read(
         'C:/Temp/DV/validator_test/Hallands kustkontroll kvartal 2_2020.xlsx',
         reader='phyche_xlsx',
-        delivery_name='hal',
+        delivery_name='hal_phyche',
     )
 
     app.read(
@@ -82,7 +64,12 @@ if __name__ == '__main__':
         delivery_name='lims',
     )
 
-    for element, item in app.deliveries['lims'].items():
-        print(element)
-        print(item)
+    # app.read(
+    #     'C:/Temp/DV/validator_test/PP_DEEP_Phytoplankton_data_2019_2020-05-07.xlsx',
+    #     reader='phytop_xlsx',
+    #     delivery_name='deep_phyto',
+    # )
 
+    # for element, item in app.deliveries['lims'].items():
+    #     print(element)
+    #     print(item)

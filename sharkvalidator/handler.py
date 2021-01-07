@@ -32,7 +32,7 @@ class Frame(pd.DataFrame, ABC):
 
     @property
     def data_columns(self):
-        #FIXME: nicht correcto..how to extract only data columns (without using hardcoded parts or index ! ! !).
+        #FIXME: nicht correcto.. how to extract only data columns (without using hardcoded parts or index ! ! !).
         # Do we use settingfile? perhaps..
         # Or! from Q_flag-fields? but then rely on a perfect delivery
 
@@ -55,9 +55,14 @@ class Frame(pd.DataFrame, ABC):
 
 class DataFrames(dict):
     """
-    Stores information for delivery sheets / metadata files.
-    Use sheet name as key in this dictionary of Frame()-objects
+    Stores information for delivery elements (sheets / files).
+    Use element name as key in this dictionary of Frame()-objects
     """
+    def __init__(self, **kwargs):
+        super(DataFrames, self).__init__()
+        for key, item in kwargs.items():
+            setattr(self, key, item)
+
     def append_new_frame(self, **kwargs):
         """
         :param kwargs:
@@ -67,16 +72,9 @@ class DataFrames(dict):
         data = kwargs.get('data')
         if name:
             # print('New data added for {}'.format(name))
-            self.setdefault(
-                name,
-                Frame(data),  # columns=kwargs.get('columns')),
-            )
+            self.setdefault(name, Frame(data))
             # self[name].convert_formats()
             # self[name].exclude_flagged_data()
-
-    def append_validator_structure(self, *args, **kwargs):
-        #TODO do we want this? or something like it?
-        raise NotImplementedError
 
 
 class MultiDeliveries(dict):
@@ -94,5 +92,3 @@ class MultiDeliveries(dict):
         if name:
             # print('New data added for {}'.format(name))
             self.setdefault(name, data)
-            # self[name].convert_formats()
-            # self[name].exclude_flagged_data()

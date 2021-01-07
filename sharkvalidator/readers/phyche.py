@@ -6,9 +6,7 @@ Created on 2020-12-15 14:15
 @author: johannes
 
 """
-import os
 from pathlib import Path
-import pandas as pd
 from sharkvalidator.readers.xlsx import PandasXlsxReader
 from sharkvalidator.readers.txt import PandasTxtReader
 
@@ -18,23 +16,6 @@ class PhysicalChemicalExcelReader(PandasXlsxReader):
     """
     def __init__(self, *args, **kwargs):
         super(PhysicalChemicalExcelReader, self).__init__(*args, **kwargs)
-        self.arguments = list(args)
-        self.file = None
-
-    def load(self, *args, **kwargs):
-        self.file = self._activate_file(*args, **kwargs)
-
-    def read_element(self, *args, **kwargs):
-        return self._read_sheet(*args, **kwargs)
-
-    def _read_sheet(self, *args, **kwargs):
-        sheet = args[0] if type(args) == tuple else args
-        if sheet in self.file.sheet_names:
-            df = self.file.parse(*args, **kwargs)
-        else:
-            df = None
-            print('sheet {} not found in delivery'.format(sheet))
-        return df
 
 
 class PhysicalChemicalLIMSReader(PandasTxtReader):

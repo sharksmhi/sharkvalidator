@@ -10,11 +10,11 @@ import pandas as pd
 from sharkvalidator.validators.validator import Validator, ValidatorLog
 
 
-class ExcelDeliveryFormat(Validator):
+class PhysicalChemicalFormat(Validator):
     """
     """
     def __init__(self, *args, **kwargs):
-        super(ExcelDeliveryFormat, self).__init__(*args, **kwargs)
+        super(PhysicalChemicalFormat, self).__init__(*args, **kwargs)
         for key, item in kwargs.items():
             setattr(self, key, item)
 

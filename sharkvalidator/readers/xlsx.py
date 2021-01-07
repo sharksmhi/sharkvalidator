@@ -61,5 +61,22 @@ class PandasXlsxReader(PandasReaderBase):
     """
     def __init__(self, *args, **kwargs):
         super(PandasXlsxReader, self).__init__()
+        self.arguments = list(args)
         for key, item in kwargs.items():
             setattr(self, key, item)
+        self.file = None
+
+    def load(self, *args, **kwargs):
+        self.file = self._activate_file(*args, **kwargs)
+
+    def read_element(self, *args, **kwargs):
+        return self._read_sheet(*args, **kwargs)
+
+    def _read_sheet(self, *args, **kwargs):
+        sheet = args[0] if type(args) == tuple else args
+        if sheet in self.file.sheet_names:
+            df = self.file.parse(*args, **kwargs)
+        else:
+            df = None
+            print('sheet {} not found in delivery'.format(sheet))
+        return df
