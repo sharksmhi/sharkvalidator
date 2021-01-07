@@ -7,27 +7,21 @@ Created on 2021-01-05 09:38
 
 """
 from abc import ABC
-
 import pandas as pd
-import datetime as dt
 
 
 class Frame(pd.DataFrame, ABC):
     """
-    Stores data from one, and only one, Excel-sheet or file.
+    Stores data from one, and only one, element (usually an excel sheet or a txt file).
     """
     @property
     def _constructor(self):
         """
-        Constructor for Frame, overides method in pd.DataFrame
-        :return: Frame
+        Constructor for Frame, overides method in pandas.DataFrame
         """
         return Frame
 
     def convert_formats(self):
-        """
-        :return:
-        """
         self[self.data_columns] = self[self.data_columns].astype(float)
 
     @property
@@ -37,11 +31,11 @@ class Frame(pd.DataFrame, ABC):
         # Or! from Q_flag-fields? but then rely on a perfect delivery
 
         # return [c for c in self.columns if not c.startswith('Q_')]
-        # return [c[2:] for c in self.quality_flag_columns]
-        cols = []
-        for c in self.quality_flag_columns:
-            cols.append(c[2:])
-        return cols
+        return [c[2:] for c in self.quality_flag_columns]
+        # cols = []
+        # for c in self.quality_flag_columns:
+        #     cols.append(c[2:])
+        # return cols
 
     @property
     def quality_flag_columns(self):
@@ -64,10 +58,6 @@ class DataFrames(dict):
             setattr(self, key, item)
 
     def append_new_frame(self, **kwargs):
-        """
-        :param kwargs:
-        :return:
-        """
         name = kwargs.get('name')
         data = kwargs.get('data')
         if name:
@@ -79,14 +69,11 @@ class DataFrames(dict):
 
 class MultiDeliveries(dict):
     """
-    Not sure about the functionality of this class.. Perhaps we can be happy with a ordinary dictionary..
+    Not sure about the functionality of this class..
+    Perhaps we can settle with just an ordinary dictionary..
     Time will tell..
     """
     def append_new_delivery(self, **kwargs):
-        """
-        :param kwargs:
-        :return:
-        """
         name = kwargs.get('name')
         data = kwargs.get('data')
         if name:

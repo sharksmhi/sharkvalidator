@@ -45,10 +45,6 @@ class SettingsBase:
 
     @staticmethod
     def _get_attribute_dictionary(settings_attributes):
-        """
-        :param settings_attributes:
-        :return:
-        """
         d = {}
         for key, item in settings_attributes.items():
             if isinstance(item, str):
@@ -61,10 +57,6 @@ class SettingsBase:
         return d
 
     def set_attributes(self, **kwargs):
-        """
-        :param kwargs: Dictionary
-        :return: sets attributes to object
-        """
         for key, value in kwargs.items():
             setattr(self, key, value)
 
@@ -94,46 +86,24 @@ class Settings(SettingsBase):
         self.set_attributes(**etc_data)
 
     def load_reader(self, reader):
-        """
-        :param reader: str, given by user
-        :return:
-        """
         reader_instance = self.readers[reader].get('reader')
         return reader_instance(**self.readers.get(reader))
 
     def load_writer(self, writer):
-        """
-        :param writer: str, given by user
-        :return:
-        """
         writer_instance = self.writers[writer].get('writer')
         return writer_instance(**self.writers.get(writer))
 
     def load_validator(self, validator):
-        """
-        :param validator: str, given by user
-        :return:
-        """
         validator_instance = self.validators[validator].get('validator')
         return validator_instance(**self.validators.get(validator))
 
     @property
     def validators_sorted(self):
-        """
-        We need a specific order when validating. sweref is master and the other validators depend on it!
-        :return: list
-        """
         return sorted(self.validators)
-        # lst = ['coordinates_sweref', 'coordinates_dd']
-        # for l in self.validators:
-        #     if l not in lst:
-        #         lst.append(l)
-        # return lst
 
     def get_export_file_path(self, **kwargs):
         """
         Whenever there is not a export path given by the user, we try to export elsewhere..
-        :return:
         """
         if kwargs.get('file_path'):
             if os.path.isdir(kwargs.get('file_path')):

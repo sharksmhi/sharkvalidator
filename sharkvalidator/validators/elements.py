@@ -1,7 +1,7 @@
-# Copyright (c) 2020 SMHI, Swedish Meteorological and Hydrological Institute 
+# Copyright (c) 2021 SMHI, Swedish Meteorological and Hydrological Institute 
 # License: MIT License (see LICENSE.txt or http://opensource.org/licenses/mit).
 """
-Created on 2020-12-16 13:52
+Created on 2021-01-07 15:54
 
 @author: johannes
 
@@ -9,23 +9,23 @@ Created on 2020-12-16 13:52
 from sharkvalidator.validators.validator import Validator, ValidatorLog
 
 
-class PhysicalChemicalFormat(Validator):
+class ElementValidator(Validator):
     """
     """
     def __init__(self, *args, **kwargs):
-        super(PhysicalChemicalFormat, self).__init__(*args, **kwargs)
+        super(ElementValidator, self).__init__(*args, **kwargs)
         for key, item in kwargs.items():
             setattr(self, key, item)
 
     def validate(self, *args, **kwargs):
         """"""
-        assert self.elements
+        assert self.element_list
 
         report = {'approved': {},
                   'disapproved': {}}
 
-        for sheet in self.sheets:
-            if sheet in self.reader.file.sheet_names:
+        for element in self.element_list:
+            if element in self.reader.file.sheet_names:
                 report['approved'].setdefault(sheet, 'All good!')
             else:
                 report['disapproved'].setdefault(sheet, 'WARNING! Missing!')

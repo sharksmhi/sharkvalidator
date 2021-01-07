@@ -15,7 +15,7 @@ class App:
     Keep it clean, keep it tidy!
     - read
     - validate
-    (- write log) ?
+    - write log
     """
     def __init__(self, *args, **kwargs):
         self.settings = Settings(**kwargs)
@@ -24,8 +24,9 @@ class App:
     def validate(self, *args, **kwargs):
         """"""
         validator_list = kwargs.get('validator_list') or self.settings.validators_sorted
-        for delivery_name in args:
-            for validator_name in validator_list:
+
+        for validator_name in validator_list:
+            for delivery_name in args:
                 validator = self.settings.load_validator(validator_name)
                 validator.validate(self.deliveries.select(delivery_name))
 
