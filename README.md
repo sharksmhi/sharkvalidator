@@ -7,4 +7,4 @@ Usage:
 - Validate format
 - Write validation to log
 
-Important: This package is not intendent to save any copies of data, only to validate its format.
+Important: This package is not intendent to save any copies/corrections of data, only to validate its format.
