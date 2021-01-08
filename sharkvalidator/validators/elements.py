@@ -7,6 +7,7 @@ Created on 2021-01-07 15:54
 
 """
 from sharkvalidator.validators.validator import Validator, ValidatorLog
+from sharkvalidator.utils import deep_get
 
 
 class ElementValidator(Validator):
@@ -17,21 +18,20 @@ class ElementValidator(Validator):
         for key, item in kwargs.items():
             setattr(self, key, item)
 
-    def validate(self, *args, **kwargs):
+    def validate(self, delivery):
         """"""
-        assert self.element_list
+        report = {'approved': {}, 'disapproved': {}}
 
-        report = {'approved': {},
-                  'disapproved': {}}
+        element_list = deep_get(self.data_types, [delivery.data_type, 'element_list'])
 
-        for element in self.element_list:
-            if element in self.reader.file.sheet_names:
-                report['approved'].setdefault(sheet, 'All good!')
+        for element in element_list:
+            if delivery[element].empty:
+                report['disapproved'].setdefault(element, 'WARNING! Missing!')
             else:
-                report['disapproved'].setdefault(sheet, 'WARNING! Missing!')
+                report['approved'].setdefault(element, 'All good!')
 
         ValidatorLog.update_info(
-            delivery_file_name=self.delivery_file_name,
+            delivery_name=delivery.name,
             validator_name=self.name,
             info=report,
         )

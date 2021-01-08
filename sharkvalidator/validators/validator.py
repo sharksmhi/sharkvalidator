@@ -16,17 +16,14 @@ class Validator(ABC):
     def __init__(self, *args, **kwargs):
         super(Validator, self).__init__()
         self.name = None
-        self.delivery_file_name = None
+        self.delivery_name = None
+        self.data_types = None
 
     def validate(self, *args, **kwargs):
         raise NotImplementedError
 
     @staticmethod
     def message(*args):
-        """
-        :param args: tuple of strings
-        :return: print to console
-        """
         print(' - '.join(args))
 
 
@@ -37,10 +34,11 @@ class ValidatorLog:
     Each validator categorizes validation in "approved" and "disapproved" validation.
 
     log: {
-        'validator_name': {
-            approved: [],
-            disapproved: [],
-        }
+        'delivery_name':
+            'validator_name': {
+                approved: [],
+                disapproved: [],
+            },...
     ... }
     """
     log = {}
@@ -55,14 +53,14 @@ class ValidatorLog:
         if kwargs.get('reset_log'):
             self.log = {}
 
-        if kwargs.get('delivery_file_name'):
-            delivery_file_name = kwargs.get('delivery_file_name')
+        if kwargs.get('delivery_name'):
+            delivery_name = kwargs.get('delivery_name')
 
-            if delivery_file_name not in self.log:
-                self.log[delivery_file_name] = {}
+            if delivery_name not in self.log:
+                self.log[delivery_name] = {}
 
             if kwargs.get('validator_name'):
-                self.log[delivery_file_name].setdefault(
+                self.log[delivery_name].setdefault(
                     kwargs.get('validator_name'),
                     kwargs.get('info')
                 )

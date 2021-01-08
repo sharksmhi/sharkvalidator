@@ -58,11 +58,11 @@ class DataFrames(dict):
             setattr(self, key, item)
 
     def append_new_frame(self, **kwargs):
-        name = kwargs.get('name')
+        element_name = kwargs.get('name')
         data = kwargs.get('data')
-        if name:
+        if element_name:
             # print('New data added for {}'.format(name))
-            self.setdefault(name, Frame(data))
+            self.setdefault(element_name, Frame(data))
             # self[name].convert_formats()
             # self[name].exclude_flagged_data()
 
@@ -74,8 +74,8 @@ class MultiDeliveries(dict):
     Time will tell..
     """
     def append_new_delivery(self, **kwargs):
-        name = kwargs.get('name')
+        delivery_name = kwargs.get('name')
         data = kwargs.get('data')
-        if name:
+        if delivery_name:
             # print('New data added for {}'.format(name))
-            self.setdefault(name, data)
+            self.setdefault(delivery_name, data)

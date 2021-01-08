@@ -14,9 +14,13 @@ from pyproj import Proj, CRS, transform
 from decimal import Decimal, ROUND_HALF_UP
 
 
-class string(str):
-    def __call__(self):
-        return str
+def deep_get(d, keys):
+    if d is None:
+        return None
+    if not keys:
+        return d
+    return deep_get(d.get(keys[0]), keys[1:])
+
 
 def decmin_to_decdeg(pos, string_type=True, decimals=4):
     """

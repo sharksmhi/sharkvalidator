@@ -8,6 +8,7 @@ Created on 2020-12-15 14:10
 """
 from sharkvalidator.config import Settings
 from sharkvalidator.handler import DataFrames, MultiDeliveries
+from sharkvalidator.validators.validator import ValidatorLog
 
 
 class App:
@@ -26,9 +27,9 @@ class App:
         validator_list = kwargs.get('validator_list') or self.settings.validators_sorted
 
         for validator_name in validator_list:
+            validator = self.settings.load_validator(validator_name)
             for delivery_name in args:
-                validator = self.settings.load_validator(validator_name)
-                validator.validate(self.deliveries.select(delivery_name))
+                validator.validate(self.deliveries.get(delivery_name))
 
     def read(self, *args, **kwargs):
         """"""
@@ -40,7 +41,7 @@ class App:
 
         reader.load(*args, **kwargs)
 
-        dfs = DataFrames(data_type=reader.get('data_type'))
+        dfs = DataFrames(data_type=reader.get('data_type'), name=delivery_name)
         for element, item in reader.elements.items():
             df = reader.read_element(item.pop('element_specifier'), **item)
             dfs.append_new_frame(name=element, data=df)
@@ -49,6 +50,17 @@ class App:
             name=delivery_name,
             data=dfs,
         )
+
+    def write(self, *args, **kwargs):
+        """"""
+        assert 'writer' in kwargs
+
+        writer = self.settings.load_writer(kwargs.get('writer'))
+        kwargs.setdefault('default_file_name', writer.default_file_name)
+        file_path = self.settings.get_export_file_path(**kwargs)
+
+        writer.write(file_path, **kwargs)
+        print('Writer done!')
 
 
 if __name__ == '__main__':
@@ -65,12 +77,11 @@ if __name__ == '__main__':
         delivery_name='lims',
     )
 
-    # app.read(
-    #     'C:/Temp/DV/validator_test/PP_DEEP_Phytoplankton_data_2019_2020-05-07.xlsx',
-    #     reader='phytop_xlsx',
-    #     delivery_name='deep_phyto',
-    # )
+    app.read(
+        'C:/Temp/DV/validator_test/PP_DEEP_Phytoplankton_data_2019_2020-05-07.xlsx',
+        reader='phytop_xlsx',
+        delivery_name='deep_phyto',
+    )
 
-    # for element, item in app.deliveries['lims'].items():
-    #     print(element)
-    #     print(item)
+    app.validate('hal_phyche', 'lims', 'deep_phyto')
+    app.write(writer='log')
