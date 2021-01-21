@@ -38,6 +38,7 @@ class PhysicalChemicalLIMSReader(PandasTxtReader):
             if kwargs.get('dtype') == '':
                 kwargs['dtype'] = str
             df = self.read(self.files.get(fid), **kwargs)
+            df = self.eliminate_empty_rows(df)
         else:
             df = None
             print('File {} not found in delivery'.format(fid))

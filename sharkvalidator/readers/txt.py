@@ -8,6 +8,7 @@ Created on 2020-12-15 13:59
 """
 import pandas as pd
 import numpy as np
+from sharkvalidator.readers.reader import Reader
 
 
 class NumpyReaderBase:
@@ -26,7 +27,7 @@ class NumpyReaderBase:
         return np.loadtxt(*args, **kwargs)
 
 
-class PandasReaderBase:
+class PandasReaderBase(Reader):
     """
     """
     def __init__(self, *args, **kwargs):
@@ -58,7 +59,7 @@ class PandasReaderBase:
                 keep_default_na
         :return:
         """
-        return pd.read_csv(*args, **kwargs)
+        return pd.read_csv(*args, **kwargs).fillna('')
 
 
 class NoneReaderBase:

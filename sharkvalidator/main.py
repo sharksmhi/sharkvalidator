@@ -17,19 +17,13 @@ class App:
     - read
     - validate
     - write log
+
+    Beautiful is better than ugly.
+    Readability counts.
     """
     def __init__(self, *args, **kwargs):
         self.settings = Settings(**kwargs)
         self.deliveries = MultiDeliveries()
-
-    def validate(self, *args, **kwargs):
-        """"""
-        validator_list = kwargs.get('validator_list') or self.settings.validators_sorted
-
-        for validator_name in validator_list:
-            validator = self.settings.load_validator(validator_name)
-            for delivery_name in args:
-                validator.validate(self.deliveries.get(delivery_name))
 
     def read(self, *args, **kwargs):
         """"""
@@ -51,6 +45,14 @@ class App:
             data=dfs,
         )
 
+    def validate(self, *args, **kwargs):
+        """"""
+        validator_list = kwargs.get('validator_list') or self.settings.validators_sorted
+        for validator_name in validator_list:
+            validator = self.settings.load_validator(validator_name)
+            for delivery_name in args:
+                validator.validate(self.deliveries.get(delivery_name))
+
     def write(self, *args, **kwargs):
         """"""
         assert 'writer' in kwargs
@@ -64,24 +66,28 @@ class App:
 
 
 if __name__ == '__main__':
+
     app = App()
+
     app.read(
         'C:/Temp/DV/validator_test/Hallands kustkontroll kvartal 2_2020.xlsx',
         reader='phyche_xlsx',
         delivery_name='hal_phyche',
     )
 
-    app.read(
-        'C:/Temp/DV/validator_test/2020-11-25 1345-2020-LANDSKOD 77-FARTYGSKOD 10',
-        reader='phyche_lims',
-        delivery_name='lims',
-    )
+    # app.read(
+    #     'C:/Temp/DV/validator_test/2020-11-25 1345-2020-LANDSKOD 77-FARTYGSKOD 10',
+    #     reader='phyche_lims',
+    #     delivery_name='lims',
+    # )
+    #
+    # app.read(
+    #     'C:/Temp/DV/validator_test/PP_DEEP_Phytoplankton_data_2019_2020-05-07.xlsx',
+    #     reader='phytop_xlsx',
+    #     delivery_name='deep_phyto',
+    # )
 
-    app.read(
-        'C:/Temp/DV/validator_test/PP_DEEP_Phytoplankton_data_2019_2020-05-07.xlsx',
-        reader='phytop_xlsx',
-        delivery_name='deep_phyto',
-    )
+    # app.validate('hal_phyche', 'lims', 'deep_phyto')
+    app.validate('hal_phyche')
 
-    app.validate('hal_phyche', 'lims', 'deep_phyto')
     app.write(writer='log')

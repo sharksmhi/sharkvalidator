@@ -22,7 +22,7 @@ class ElementValidator(Validator):
         """"""
         report = {'approved': {}, 'disapproved': {}}
 
-        element_list = deep_get(self.data_types, [delivery.data_type, 'element_list'])
+        element_list = deep_get(self.data_types, [delivery.data_type, 'element_list']) or []
 
         for element in element_list:
             if delivery[element].empty:

@@ -20,3 +20,7 @@ class Reader(ABC):
 
     def read_element(self, *args, **kwargs):
         raise NotImplementedError
+
+    @staticmethod
+    def eliminate_empty_rows(df):
+        return df.loc[df.apply(any, axis=1), :].reset_index(drop=True)

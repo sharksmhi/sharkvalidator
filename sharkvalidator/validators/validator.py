@@ -18,9 +18,15 @@ class Validator(ABC):
         self.name = None
         self.delivery_name = None
         self.data_types = None
+        self.format_validators = None
+        self.parameters = None
 
     def validate(self, *args, **kwargs):
         raise NotImplementedError
+
+    def update_attributes(self, **kwargs):
+        for key, item in kwargs.items():
+            setattr(self, key, item)
 
     @staticmethod
     def message(*args):

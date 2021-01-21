@@ -7,9 +7,10 @@ Created on 2020-12-15 13:59
 
 """
 import pandas as pd
+from sharkvalidator.readers.reader import Reader
 
 
-class PandasReaderBase:
+class PandasReaderBase(Reader):
     """
     """
     def __init__(self, *args, **kwargs):
@@ -52,7 +53,7 @@ class PandasReaderBase:
                 keep_default_na
         :return:
         """
-        return pd.read_excel(*args, **kwargs)
+        return pd.read_excel(*args, **kwargs).fillna('')
 
 
 class PandasXlsxReader(PandasReaderBase):
@@ -75,7 +76,8 @@ class PandasXlsxReader(PandasReaderBase):
     def _read_sheet(self, *args, **kwargs):
         sheet = args[0] if type(args) == tuple else args
         if sheet in self.file.sheet_names:
-            df = self.file.parse(*args, **kwargs)
+            df = self.file.parse(*args, **kwargs).fillna('')
+            df = self.eliminate_empty_rows(df)
         else:
             df = None
             print('sheet {} not found in delivery'.format(sheet))

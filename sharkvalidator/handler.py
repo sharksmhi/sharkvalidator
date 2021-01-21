@@ -29,22 +29,12 @@ class Frame(pd.DataFrame, ABC):
         #FIXME: nicht correcto.. how to extract only data columns (without using hardcoded parts or index ! ! !).
         # Do we use settingfile? perhaps..
         # Or! from Q_flag-fields? but then rely on a perfect delivery
-
         # return [c for c in self.columns if not c.startswith('Q_')]
         return [c[2:] for c in self.quality_flag_columns]
-        # cols = []
-        # for c in self.quality_flag_columns:
-        #     cols.append(c[2:])
-        # return cols
 
     @property
     def quality_flag_columns(self):
         return [c for c in self.columns if c.startswith('Q_')]
-        # cols = []
-        # for c in self.columns:
-        #     if c.startswith('Q_'):
-        #         cols.append(c)
-        # return cols
 
 
 class DataFrames(dict):
@@ -74,6 +64,11 @@ class MultiDeliveries(dict):
     Time will tell..
     """
     def append_new_delivery(self, **kwargs):
+        """
+
+        :param kwargs:
+        :return:
+        """
         delivery_name = kwargs.get('name')
         data = kwargs.get('data')
         if delivery_name:
