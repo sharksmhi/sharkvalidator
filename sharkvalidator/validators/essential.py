@@ -18,8 +18,8 @@ class EssentialValidator(Validator):
         for key, item in kwargs.items():
             setattr(self, key, item)
 
-    def validate(self, delivery):
-        report = {'approved': {}, 'disapproved': {}}
+    def validate(self, delivery, **kwargs):
+        report = {'disapproved': {}} if kwargs.get('disapproved_only') else {'approved': {}, 'disapproved': {}}
 
         for element, item in delivery.items():
 
@@ -30,7 +30,8 @@ class EssentialValidator(Validator):
                 if parameter in item:
                     if item[parameter].ne('').all():
                         # not equal to ''
-                        report['approved'].setdefault(report_key, 'No missing values')
+                        if not kwargs.get('disapproved_only'):
+                            report['approved'].setdefault(report_key, 'No missing values')
                     else:
                         report['disapproved'].setdefault(report_key, 'WARNING! Missing values')
                 else:

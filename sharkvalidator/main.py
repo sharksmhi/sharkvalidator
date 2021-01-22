@@ -18,8 +18,11 @@ class App:
     - validate
     - write log
 
+    Only for validation! Do not pass data on to other tasks!
+
     Beautiful is better than ugly.
     Readability counts.
+
     """
     def __init__(self, *args, **kwargs):
         self.settings = Settings(**kwargs)
@@ -51,7 +54,10 @@ class App:
         for validator_name in validator_list:
             validator = self.settings.load_validator(validator_name)
             for delivery_name in args:
-                validator.validate(self.deliveries.get(delivery_name))
+                validator.validate(
+                    self.deliveries.get(delivery_name),
+                    **kwargs,
+                )
 
     def write(self, *args, **kwargs):
         """"""
@@ -75,12 +81,12 @@ if __name__ == '__main__':
         delivery_name='hal_phyche',
     )
 
-    # app.read(
-    #     'C:/Temp/DV/validator_test/2020-11-25 1345-2020-LANDSKOD 77-FARTYGSKOD 10',
-    #     reader='phyche_lims',
-    #     delivery_name='lims',
-    # )
-    #
+    app.read(
+        'C:/Temp/DV/validator_test/2020-11-25 1345-2020-LANDSKOD 77-FARTYGSKOD 10',
+        reader='phyche_lims',
+        delivery_name='lims',
+    )
+
     # app.read(
     #     'C:/Temp/DV/validator_test/PP_DEEP_Phytoplankton_data_2019_2020-05-07.xlsx',
     #     reader='phytop_xlsx',
@@ -88,6 +94,6 @@ if __name__ == '__main__':
     # )
 
     # app.validate('hal_phyche', 'lims', 'deep_phyto')
-    app.validate('hal_phyche')
+    app.validate('hal_phyche', 'lims', disapproved_only=True)
 
     app.write(writer='log')

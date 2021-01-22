@@ -76,6 +76,8 @@ class PandasXlsxReader(PandasReaderBase):
     def _read_sheet(self, *args, **kwargs):
         sheet = args[0] if type(args) == tuple else args
         if sheet in self.file.sheet_names:
+            if kwargs.get('dtype') == '':
+                kwargs['dtype'] = str
             df = self.file.parse(*args, **kwargs).fillna('')
             df = self.eliminate_empty_rows(df)
         else:

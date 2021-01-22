@@ -31,3 +31,36 @@ elements:
         encoding: "cp1252"
         dtype: !!python/str
         keep_default_na: false
+
+data_columns:
+    - AL
+    - ALKY
+    - AMON
+    - CDOM
+    - CNDC_25
+    - CNDC_CTD
+    - CPHL
+    - DOC
+    - DOXY_BTL
+    - DOXY_CTD
+    - H2S
+    - HUMUS
+    - NTOT
+    - NTRA
+    - NTRI
+    - NTRZ
+    - PH
+    - PH_LAB
+    - PH_LAB_TEMP
+    - PHOS
+    - POC
+    - PON
+    - PRES_CTD
+    - PTOT
+    - SALT_BTL
+    - SALT_CTD
+    - SECCHI
+    - SIO3-SI
+    - TEMP_BTL
+    - TEMP_CTD
+    - TOC

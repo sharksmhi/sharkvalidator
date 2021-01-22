@@ -4,7 +4,7 @@ validator: !!python/name:sharkvalidator.validators.formats.FormatValidator ''
 format_validators:
     code:
         validator: !!python/name:sharkvalidator.validators.formats.CodeValidator ''
-        path_to_code_list:
+        path_to_codelist: "etc/codelist_SMHI.xlsx"
     datetime:
         validator: !!python/name:sharkvalidator.validators.formats.DateTimeValidator ''
     free_text:
@@ -48,8 +48,12 @@ parameters:
         format_validator: free_text
     LATIT:
         format_validator: position
+        lower_range: 5350
+        upper_range: 6600
     LONGI:
         format_validator: position
+        lower_range: 300
+        upper_range: 3300
     POSYS:
         format_validator: code
     WADEP:

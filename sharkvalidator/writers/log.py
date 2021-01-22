@@ -6,7 +6,7 @@ Created on 2021-01-08 13:37
 @author: johannes
 
 """
-# import yaml
+import yaml
 import json
 
 from sharkvalidator.writers.writer import WriterBase
@@ -28,11 +28,16 @@ class ValidationWriter(WriterBase):
         :param list_obj: stations.validators.ValidatorLog.log
         :return:
         """
-        with open(file_path, "w", encoding='cp1252') as file:
-            json.dump(
+        # with open(file_path, "w", encoding='cp1252') as file:
+        #     json.dump(
+        #         ValidatorLog.log,
+        #         file,
+        #         indent=4,
+        #     )
+        with open(file_path, 'w') as file:
+            yaml.safe_dump(
                 ValidatorLog.log,
                 file,
                 indent=4,
+                default_flow_style=False,
             )
-        # with open(file_path, 'w') as file:
-        #     yaml.safe_dump(ValidatorLog.log, file, indent=4, default_flow_style=False)

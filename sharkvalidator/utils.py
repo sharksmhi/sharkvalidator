@@ -14,6 +14,10 @@ from pyproj import Proj, CRS, transform
 from decimal import Decimal, ROUND_HALF_UP
 
 
+def get_app_directory():
+    return os.path.dirname(os.path.realpath(__file__))
+
+
 def deep_get(d, keys):
     if d is None:
         return None
@@ -123,3 +127,37 @@ def transform_ref_system(lat=0.0, lon=0.0,
     x, y = transform(i_proj, o_proj, float(lon), float(lat), always_xy=True)
 
     return y, x
+
+
+def delete_key_from_dict(dictionary, key):
+    """
+    Loops recursively over nested dictionaries.
+    """
+    for k, v in dictionary.items():
+        if key in v:
+            del v[key]
+        if isinstance(v, dict):
+            delete_key_from_dict(v, key)
+    return dictionary
+
+
+class CodeDict(dict):
+    def __init__(self, seq=None, **kwargs):
+        super(CodeDict, self).__init__(seq=None, **kwargs)
+        self._mapper = {
+            'ALABO': 'LABO',
+            'RLABO': 'LABO',
+            'SLABO': 'LABO',
+            'ORDERER': 'LABO',
+            'CURDIR': 'WINDIR',
+            'REFSK_SMP': 'REFSK',
+            'REFSK_ANA': 'REFSK',
+            'ADD_SMP': 'DTYPE',
+        }
+
+    def map_get(self, item):
+        if item.startswith('Q_'):
+            return self.get('QFLAG')
+        elif item.startswith('ACKR_'):
+            return {'Y', 'N', 'Yes', 'No'}
+        return self.get(self._mapper.get(item, item))
