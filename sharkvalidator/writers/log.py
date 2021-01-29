@@ -39,5 +39,6 @@ class ValidationWriter(WriterBase):
                 ValidatorLog.log,
                 file,
                 indent=4,
+                width=120,
                 default_flow_style=False,
             )

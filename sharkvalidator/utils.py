@@ -7,6 +7,7 @@ Created on 2020-12-15 14:10
 
 """
 import os
+from copy import deepcopy
 import numpy as np
 from collections import Mapping
 from datetime import datetime
@@ -144,7 +145,7 @@ def delete_key_from_dict(dictionary, key):
 class CodeDict(dict):
     def __init__(self, seq=None, **kwargs):
         super(CodeDict, self).__init__(seq=None, **kwargs)
-        self._mapper = {
+        self.mapper = {
             'ALABO': 'LABO',
             'RLABO': 'LABO',
             'SLABO': 'LABO',
@@ -160,4 +161,11 @@ class CodeDict(dict):
             return self.get('QFLAG')
         elif item.startswith('ACKR_'):
             return {'Y', 'N', 'Yes', 'No'}
-        return self.get(self._mapper.get(item, item))
+        return self.get(self.mapper.get(item, item))
+
+    def setdefault_values(self, k, default):
+        if k == 'WINDIR':
+            s = deepcopy(default)
+            for v in s:
+                default.add(v.zfill(2))
+        self[k] = self[k] if k in self else default

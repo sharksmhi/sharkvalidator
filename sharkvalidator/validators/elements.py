@@ -25,7 +25,7 @@ class ElementValidator(Validator):
 
         for element in element_list:
             if delivery[element].empty:
-                report['disapproved'].setdefault(element, 'WARNING! Missing!')
+                report['disapproved'].setdefault(element, 'Missing!')
             else:
                 if not kwargs.get('disapproved_only'):
                     report['approved'].setdefault(element, 'All good!')

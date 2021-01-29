@@ -68,8 +68,8 @@ class FormatValidator(Validator):
                             if not kwargs.get('disapproved_only'):
                                 report['approved'].setdefault(report_key, 'Format OK!')
                         else:
-                            report['disapproved'].setdefault(report_key, 'WARNING! Format validation failed. '
-                                                             + validation_result.get('text'))
+                            report['disapproved'].setdefault(report_key, validation_result.get('text'))
+
         ValidatorLog.update_info(
             delivery_name=delivery.name,
             validator_name=self.name,
@@ -96,7 +96,7 @@ class CodeValidator(Validator):
         self.code_list = CodeDict()
         for attr in cl['Data_field'].unique():
             boolean = cl['Data_field'] == attr
-            self.code_list.setdefault(attr, set(cl.loc[boolean, 'Code'].values))
+            self.code_list.setdefault_values(attr, set(cl.loc[boolean, 'Code'].values))
 
     @staticmethod
     def unique_values(values):
@@ -123,7 +123,7 @@ class CodeValidator(Validator):
                 if not all(codes):
                     result['approved'] = False
                     result['text'] = 'Codes are inconsistent with standard code format of {}'\
-                        .format(self.code_list._mapper.get(serie.name, serie.name))
+                        .format(self.code_list.mapper.get(serie.name, serie.name))
             except ValueError:
                 result['approved'] = False
                 result['text'] = 'ValueError! string instead of interger/float values?'
@@ -149,7 +149,7 @@ class DateTimeValidator(Validator):
         if boolean.any():
             result['validation'] = True
             try:
-                boolean = pd.to_datetime(serie, format=self.fmt, errors='coerce').notna()
+                boolean = pd.to_datetime(serie[boolean], format=self.fmt, errors='coerce').notna()
                 if not boolean.all():
                     result['approved'] = False
                     result['text'] = 'Values are inconsistent with standard format ({})'.format(self.fmt)

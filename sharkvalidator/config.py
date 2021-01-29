@@ -7,6 +7,7 @@ Created on 2020-12-15 14:10
 
 """
 import os
+from copy import deepcopy
 from pathlib import Path
 from sharkvalidator.readers.yml import yaml_reader
 from sharkvalidator.utils import generate_filepaths, recursive_dict_update
@@ -87,7 +88,7 @@ class Settings(SettingsBase):
 
     def load_reader(self, reader):
         reader_instance = self.readers[reader].get('reader')
-        return reader_instance(**self.readers.get(reader))
+        return reader_instance(**deepcopy(self.readers.get(reader)))
 
     def load_writer(self, writer):
         writer_instance = self.writers[writer].get('writer')

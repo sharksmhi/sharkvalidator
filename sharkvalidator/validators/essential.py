@@ -33,9 +33,9 @@ class EssentialValidator(Validator):
                         if not kwargs.get('disapproved_only'):
                             report['approved'].setdefault(report_key, 'No missing values')
                     else:
-                        report['disapproved'].setdefault(report_key, 'WARNING! Missing values')
+                        report['disapproved'].setdefault(report_key, 'Missing values')
                 else:
-                    report['disapproved'].setdefault(report_key, 'WARNING! Missing attribute')
+                    report['disapproved'].setdefault(report_key, 'Missing parameter')
 
         ValidatorLog.update_info(
             delivery_name=delivery.name,
