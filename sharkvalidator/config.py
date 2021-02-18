@@ -7,10 +7,11 @@ Created on 2020-12-15 14:10
 
 """
 import os
+import requests
 from copy import deepcopy
 from pathlib import Path
 from sharkvalidator.readers.yml import yaml_reader
-from sharkvalidator.utils import generate_filepaths, recursive_dict_update
+from sharkvalidator.utils import generate_filepaths, get_app_directory, recursive_dict_update
 
 
 class SettingsBase:
@@ -67,9 +68,10 @@ class Settings(SettingsBase):
     """
     def __init__(self, *args, **kwargs):
         super().__init__()
-        self.base_directory = os.path.dirname(os.path.realpath(__file__))
+        self.base_directory = get_app_directory()
         etc_path = os.path.join(self.base_directory, 'etc')
         self._load_settings(etc_path)
+        self._check_for_code_list(etc_path)
 
     def _load_settings(self, etc_path):
         """
@@ -85,6 +87,18 @@ class Settings(SettingsBase):
             etc_data.setdefault(path, data)
 
         self.set_attributes(**etc_data)
+
+    @staticmethod
+    def _check_for_code_list(etc_path):
+        file_path = os.path.join(etc_path, 'codelist_SMHI.xlsx')
+        if not os.path.exists(file_path):
+            print('Could not find codelist. Trying to download it instead..')
+            r = requests.get(
+                'http://smhi.se/oceanografi/oce_info_data/shark_web/downloads/codelist_SMHI.xlsx',
+                allow_redirects=True,
+            )
+            open(file_path, 'wb').write(r.content)
+            print('Download completed! file saved here: {}'.format(file_path))
 
     def load_reader(self, reader):
         reader_instance = self.readers[reader].get('reader')
@@ -104,10 +118,13 @@ class Settings(SettingsBase):
 
     def get_export_file_path(self, **kwargs):
         """
-        Whenever there is not a export path given by the user, we try to export elsewhere..
+        Whenever there´s not an export path given by the user, we try to export elsewhere..
         """
         if kwargs.get('file_path'):
+
             if os.path.isdir(kwargs.get('file_path')):
+                return kwargs.get('file_path')
+            elif os.path.isdir(Path(kwargs.get('file_path')).parent):
                 return kwargs.get('file_path')
             else:
                 raise Warning('file_path given, but it´s not valid.')

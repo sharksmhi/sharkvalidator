@@ -9,3 +9,4 @@ Created on 2020-12-15 14:10
 from sharkvalidator.readers import *
 from sharkvalidator.writers import *
 from sharkvalidator.validators import *
+from sharkvalidator.main import App
