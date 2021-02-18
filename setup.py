@@ -10,12 +10,17 @@ import os
 import setuptools
 
 
+requirements = []
+with open('requirements.txt', 'r') as fh:
+    for line in fh:
+        requirements.append(line.strip())
+
 NAME = 'sharkvalidator'
 README = open('READMEpypi.rst', 'r').read()
 
 setuptools.setup(
     name=NAME,
-    version="0.1.9",
+    version="0.1.10",
     author="SMHI - NODC",
     author_email="shark@smhi.se",
     description="Validate data delivery at the Swedish NODC",
@@ -35,4 +40,5 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     python_requires='>=3.6',
+    install_requires=requirements,
 )
