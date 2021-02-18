@@ -11,8 +11,8 @@ import setuptools
 
 
 def long_description():
-    if os.path.exists('README.md'):
-        return open('README.md').read()
+    if os.path.exists('README.rst'):
+        return open('README.rst').read()
     else:
         return 'No readme file'
 

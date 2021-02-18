@@ -1,4 +1,8 @@
 # sharkvalidator
+=====
+
+.. image:: https://badge.fury.io/py/sharkvalidator.svg
+    :target: https://pypi.python.org/pypi/sharkvalidator/
 
 Python 3 library developed by Shd at SMHI.
 
