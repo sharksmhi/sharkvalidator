@@ -1,6 +1,8 @@
 SHARKvalidator
 =====
 
+[![PyPi version](https://pypip.in/v/sharkvalidator/badge.png)](https://crate.io/packages/sharkvalidator/)
+
 .. image:: https://pypip.in/v/sharkvalidator/badge.png
     :target: https://pypi.python.org/pypi/sharkvalidator/
     :alt: Latest PyPI version
