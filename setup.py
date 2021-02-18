@@ -10,22 +10,18 @@ import os
 import setuptools
 
 
-def long_description():
-    if os.path.exists('README.rst'):
-        return open('README.rst').read()
-    else:
-        return 'No readme file'
-
+NAME = 'sharkvalidator'
+README = open('README.rst', 'r').read()
 
 setuptools.setup(
-    name="sharkvalidator",
-    version="0.1.0",
-    author="Johannes Johansson",
-    author_email="johannes.johansson@smhi.se",
+    name=NAME,
+    version="0.1.1",
+    author="SMHI - NODC",
+    author_email="shark@smhi.se",
     description="Validate data delivery at the Swedish NODC",
-    long_description=long_description(),
+    long_description=README,
     long_description_content_type="text/markdown",
-    url="https://github.com/pypa/sampleproject",
+    url="https://github.com/sharksmhi/sharkvalidator",
     packages=setuptools.find_packages(),
     package_data={'sharkvalidator': [
         os.path.join('etc', '*.xlsx'),
@@ -38,4 +34,5 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
+    python_requires='>=3.6',
 )
