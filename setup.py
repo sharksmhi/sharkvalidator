@@ -19,7 +19,7 @@ def long_description():
 
 setuptools.setup(
     name="sharkvalidator",
-    version="1.0.0",
+    version="0.1.0",
     author="Johannes Johansson",
     author_email="johannes.johansson@smhi.se",
     description="Validate data delivery at the Swedish NODC",
