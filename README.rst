@@ -4,8 +4,8 @@ SHARKvalidator
 .. image:: https://pypip.in/v/sharkvalidator/badge.svg
     :target: https://pypi.python.org/pypi/sharkvalidator/
 
-.. image:: https://pypip.in/wheel/sharkvalidator/badge.svg
-    :target: https://pypi.python.org/pypi/sharkvalidator/
+.. image:: https://badge.fury.io/py/sharkvalidator.svg
+    :target: https://badge.fury.io/py/sharkvalidator
 
 .. image:: https://pypip.in/license/sharkvalidator/badge.svg
     :target: https://pypi.python.org/pypi/sharkvalidator/
