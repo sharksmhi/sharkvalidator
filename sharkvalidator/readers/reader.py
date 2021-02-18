@@ -13,7 +13,7 @@ class Reader(ABC):
     """
     """
     def __init__(self):
-        super(Reader, self).__init__()
+        super().__init__()
 
     def load(self, *args, **kwargs):
         raise NotImplementedError

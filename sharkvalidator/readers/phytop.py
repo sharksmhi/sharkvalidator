@@ -14,4 +14,4 @@ class PhytoplanktonExcelReader(PandasXlsxReader):
     """
     """
     def __init__(self, *args, **kwargs):
-        super(PhytoplanktonExcelReader, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)

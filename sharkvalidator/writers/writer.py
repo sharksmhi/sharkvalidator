@@ -13,20 +13,10 @@ class WriterBase(ABC):
     """
     """
     def __init__(self, *args, **kwargs):
-        super(WriterBase, self).__init__()
+        super().__init__()
 
     def write(self, *args, **kwargs):
-        """
-        :param args:
-        :param kwargs:
-        :return:
-        """
         raise NotImplementedError
 
     def _write(self, *args, **kwargs):
-        """
-        :param args:
-        :param kwargs:
-        :return:
-        """
         raise NotImplementedError

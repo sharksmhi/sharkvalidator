@@ -43,10 +43,7 @@ class App:
             df = reader.read_element(item.pop('element_specifier'), **item)
             dfs.append_new_frame(name=element, data=df)
 
-        self.deliveries.append_new_delivery(
-            name=delivery_name,
-            data=dfs,
-        )
+        self.deliveries.append_new_delivery(name=delivery_name, data=dfs)
 
     def validate(self, *args, **kwargs):
         """"""
@@ -54,10 +51,7 @@ class App:
         for validator_name in validator_list:
             validator = self.settings.load_validator(validator_name)
             for delivery_name in args:
-                validator.validate(
-                    self.deliveries.get(delivery_name),
-                    **kwargs,
-                )
+                validator.validate(self.deliveries.get(delivery_name), **kwargs)
 
     def write(self, *args, **kwargs):
         """"""
@@ -75,11 +69,11 @@ if __name__ == '__main__':
 
     app = App()
 
-    # app.read(
-    #     'C:/Temp/DV/validator_test/Hallands kustkontroll kvartal 2_2020.xlsx',
-    #     reader='phyche_xlsx',
-    #     delivery_name='hal_phyche',
-    # )
+    app.read(
+        'C:/Temp/DV/validator_test/Hallands kustkontroll kvartal 2_2020.xlsx',
+        reader='phyche_xlsx',
+        delivery_name='hal_phyche',
+    )
 
     # app.read(
     #     'C:/Temp/DV/validator_test/2020-11-25 1345-2020-LANDSKOD 77-FARTYGSKOD 10',
@@ -93,8 +87,9 @@ if __name__ == '__main__':
     #     delivery_name='deep_phyto',
     # )
 
+
     # app.validate('hal_phyche', 'lims', 'deep_phyto')
-    # app.validate('hal_phyche', 'lims', disapproved_only=True)
-    app.validate('skane', disapproved_only=True)
+    app.validate('hal_phyche', disapproved_only=True)
+    # app.validate('him', disapproved_only=True)
 
     app.write(writer='log')

@@ -35,7 +35,7 @@ class FormatValidator(Validator):
     Node class for format validators.
     """
     def __init__(self, *args, **kwargs):
-        super(FormatValidator, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         for key, item in kwargs.items():
             setattr(self, key, item)
 
@@ -81,7 +81,7 @@ class CodeValidator(Validator):
     """
     """
     def __init__(self, *args, **kwargs):
-        super(CodeValidator, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         for key, item in kwargs.items():
             setattr(self, key, item)
 
@@ -126,7 +126,7 @@ class CodeValidator(Validator):
                         .format(self.code_list.mapper.get(serie.name, serie.name))
             except ValueError:
                 result['approved'] = False
-                result['text'] = 'ValueError! string instead of interger/float values?'
+                result['text'] = 'ValueError! string instead of interger or float values?'
         return result
 
 
@@ -134,7 +134,7 @@ class DateTimeValidator(Validator):
     """
     """
     def __init__(self, *args, **kwargs):
-        super(DateTimeValidator, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         for key, item in kwargs.items():
             setattr(self, key, item)
 
@@ -155,7 +155,7 @@ class DateTimeValidator(Validator):
                     result['text'] = 'Values are inconsistent with standard format ({})'.format(self.fmt)
             except ValueError:
                 result['approved'] = False
-                result['text'] = 'ValueError! string instead of interger/float values?'
+                result['text'] = 'ValueError! string instead of interger or float values?'
         return result
 
 
@@ -163,7 +163,7 @@ class FreeTextValidator(Validator):
     """
     """
     def __init__(self, *args, **kwargs):
-        super(FreeTextValidator, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         for key, item in kwargs.items():
             setattr(self, key, item)
 
@@ -185,7 +185,7 @@ class PositionValidator(Validator):
     """
     """
     def __init__(self, *args, **kwargs):
-        super(PositionValidator, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         for key, item in kwargs.items():
             setattr(self, key, item)
 
@@ -210,7 +210,7 @@ class PositionValidator(Validator):
                     result['text'] = 'Values outside range ({} - {})'.format(self.lower_range, self.upper_range)
             except ValueError:
                 result['approved'] = False
-                result['text'] = 'ValueError! string instead of interger/float values? ' \
+                result['text'] = 'ValueError! string instead of interger or float values? ' \
                                  'or maybe decimal sign: comma instead of dot?'
         return result
 
@@ -219,7 +219,7 @@ class RangeValidator(Validator):
     """
     """
     def __init__(self, *args, **kwargs):
-        super(RangeValidator, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         for key, item in kwargs.items():
             setattr(self, key, item)
 
@@ -242,6 +242,6 @@ class RangeValidator(Validator):
                     result['text'] = 'Values outside range ({} - {})'.format(self.lower_range, self.upper_range)
             except ValueError:
                 result['approved'] = False
-                result['text'] = 'ValueError! string instead of interger/float values? ' \
+                result['text'] = 'ValueError! string instead of interger or float values? ' \
                                  'or maybe decimal sign: comma instead of dot?'
         return result

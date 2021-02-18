@@ -15,7 +15,7 @@ from sharkvalidator.utils import generate_filepaths, recursive_dict_update
 
 class SettingsBase:
     def __init__(self, *args, **kwargs):
-        super(SettingsBase, self).__init__()
+        super().__init__()
         self.default_attributes = None
         self.readers = {}
         self.writers = {}
@@ -66,7 +66,7 @@ class Settings(SettingsBase):
     """
     """
     def __init__(self, *args, **kwargs):
-        super(Settings, self).__init__()
+        super().__init__()
         self.base_directory = os.path.dirname(os.path.realpath(__file__))
         etc_path = os.path.join(self.base_directory, 'etc')
         self._load_settings(etc_path)

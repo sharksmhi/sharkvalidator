@@ -144,7 +144,7 @@ def delete_key_from_dict(dictionary, key):
 
 class CodeDict(dict):
     def __init__(self, seq=None, **kwargs):
-        super(CodeDict, self).__init__(seq=None, **kwargs)
+        super().__init__(seq=None, **kwargs)
         self.mapper = {
             'ALABO': 'LABO',
             'RLABO': 'LABO',

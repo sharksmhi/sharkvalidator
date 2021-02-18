@@ -14,7 +14,7 @@ class PandasReaderBase(Reader):
     """
     """
     def __init__(self, *args, **kwargs):
-        super(PandasReaderBase, self).__init__()
+        super().__init__()
 
     def get(self, item):
         """
@@ -61,7 +61,7 @@ class PandasXlsxReader(PandasReaderBase):
     Reads xlsx files
     """
     def __init__(self, *args, **kwargs):
-        super(PandasXlsxReader, self).__init__()
+        super().__init__()
         self.arguments = list(args)
         for key, item in kwargs.items():
             setattr(self, key, item)

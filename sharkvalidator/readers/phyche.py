@@ -15,14 +15,14 @@ class PhysicalChemicalExcelReader(PandasXlsxReader):
     """
     """
     def __init__(self, *args, **kwargs):
-        super(PhysicalChemicalExcelReader, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
 
 class PhysicalChemicalLIMSReader(PandasTxtReader):
     """
     """
     def __init__(self, *args, **kwargs):
-        super(PhysicalChemicalLIMSReader, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.arguments = list(args)
         self.files = {}
 

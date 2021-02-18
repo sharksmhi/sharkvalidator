@@ -15,7 +15,7 @@ class NumpyReaderBase:
     """
     """
     def __init__(self):
-        super(NumpyReaderBase, self).__init__()
+        super().__init__()
 
     @staticmethod
     def read(*args, **kwargs):
@@ -31,7 +31,7 @@ class PandasReaderBase(Reader):
     """
     """
     def __init__(self, *args, **kwargs):
-        super(PandasReaderBase, self).__init__()
+        super().__init__()
 
     def get(self, item):
         """
@@ -67,7 +67,7 @@ class NoneReaderBase:
     Dummy base
     """
     def __init__(self):
-        super(NoneReaderBase, self).__init__()
+        super().__init__()
 
     @staticmethod
     def read(*args, **kwargs):
@@ -79,7 +79,7 @@ class PandasTxtReader(PandasReaderBase):
     Reads txt / csv files
     """
     def __init__(self, *args, **kwargs):
-        super(PandasTxtReader, self).__init__()
+        super().__init__()
         for key, item in kwargs.items():
             setattr(self, key, item)
 
@@ -103,7 +103,7 @@ def text_reader(reader_type, *args, **kwargs):
         """
         """
         def __init__(self):
-            super(TextReader, self).__init__()
+            super().__init__()
 
     tr = TextReader()
     return tr.read(*args, **kwargs)

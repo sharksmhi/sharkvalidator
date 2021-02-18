@@ -14,7 +14,7 @@ class Validator(ABC):
     Base class for validators.
     """
     def __init__(self, *args, **kwargs):
-        super(Validator, self).__init__()
+        super().__init__()
         self.name = None
         self.delivery_name = None
         self.data_types = None

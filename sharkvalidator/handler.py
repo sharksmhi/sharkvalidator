@@ -28,7 +28,7 @@ class Frame(pd.DataFrame, ABC):
     def data_columns(self):
         #FIXME: nicht correcto.. how to extract only data columns (without using hardcoded parts or index ! ! !).
         # Do we use settingfile? perhaps..
-        # Or! from Q_flag-fields? but then rely on a perfect delivery
+        # Or! from Q_flag-fields? but then we rely on a perfect delivery
         # return [c for c in self.columns if not c.startswith('Q_')]
         return [c[2:] for c in self.quality_flag_columns]
 
@@ -39,7 +39,7 @@ class Frame(pd.DataFrame, ABC):
 
 class DataFrames(dict):
     """
-    Stores information for delivery elements (sheets / files).
+    Stores information for delivery elements (sheets / files, eg. delivery_info, data, analyse_info, sampling_info).
     Use element name as key in this dictionary of Frame()-objects
     """
     def __init__(self, **kwargs):

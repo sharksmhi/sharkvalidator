@@ -14,7 +14,7 @@ class EssentialValidator(Validator):
     """
     """
     def __init__(self, *args, **kwargs):
-        super(EssentialValidator, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         for key, item in kwargs.items():
             setattr(self, key, item)
 
