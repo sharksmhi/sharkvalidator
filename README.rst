@@ -2,7 +2,7 @@ SHARKvalidator
 =====
 
 .. image:: https://pypip.in/v/sharkvalidator/badge.png
-    :target: https://crate.io/packages/sharkvalidator/
+    :target: https://pypi.python.org/pypi/sharkvalidator/
     :alt: Latest PyPI version
 
 .. image:: https://pypip.in/wheel/sharkvalidator/badge.svg
