@@ -1,9 +1,6 @@
 SHARKvalidator
 =====
 
-.. image:: https://badge.fury.io/py/sharkvalidator.svg
-    :target: https://pypi.python.org/pypi/sharkvalidator/
-
 .. image:: https://pypip.in/wheel/sharkvalidator/badge.svg
         :target: https://pypi.python.org/pypi/sharkvalidator/
 
