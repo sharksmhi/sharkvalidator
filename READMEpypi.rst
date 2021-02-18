@@ -1,14 +1,6 @@
-SHARKvalidator
-=====
-.. image:: https://pypip.in/v/sharkvalidator/badge.png
-    :target: https://pypi.python.org/pypi/sharkvalidator/
-    :alt: Latest PyPI version
-
-.. image:: https://pypip.in/wheel/sharkvalidator/badge.svg
-    :target: https://pypi.python.org/pypi/sharkvalidator/
-
-.. image:: https://pypip.in/license/sharkvalidator/badge.svg
-    :target: https://pypi.python.org/pypi/sharkvalidator/
+[![PyPi version](https://badge.fury.io/py/sharkvalidator.svg)](https://pypi.python.org/pypi/sharkvalidator/)
+[![PyPi wheel](https://pypip.in/wheel/sharkvalidator/badge.png)](https://crate.io/packages/sharkvalidator/)
+[![PyPi license](https://pypip.in/license/sharkvalidator/badge.png)](https://crate.io/packages/sharkvalidator/)
 
 Python 3 library developed by Shd at SMHI.
 
@@ -22,9 +14,7 @@ Installation
 
 SHARKvalidator can be installed from PyPI with pip:
 
-.. code-block:: bash
-
-    pip install sharkvalidator
+`pip3 install sharkvalidator`
 
 Important:
 ------------
