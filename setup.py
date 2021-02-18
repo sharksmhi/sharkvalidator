@@ -15,7 +15,7 @@ README = open('README.rst', 'r').read()
 
 setuptools.setup(
     name=NAME,
-    version="0.1.1",
+    version="0.1.2",
     author="SMHI - NODC",
     author_email="shark@smhi.se",
     description="Validate data delivery at the Swedish NODC",
