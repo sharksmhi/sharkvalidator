@@ -116,16 +116,16 @@ class Settings(SettingsBase):
     def validators_sorted(self):
         return sorted(self.validators)
 
-    def get_export_file_path(self, **kwargs):
+    def get_export_file_path(self, file_path=None, file_name=None, default_file_name=None, **kwargs):
         """
         Whenever there´s not an export path given by the user, we try to export elsewhere..
         """
-        if kwargs.get('file_path'):
+        if file_path:
 
-            if os.path.isdir(kwargs.get('file_path')):
-                return kwargs.get('file_path')
-            elif os.path.isdir(Path(kwargs.get('file_path')).parent):
-                return kwargs.get('file_path')
+            if os.path.isdir(file_path):
+                return file_path
+            elif os.path.isdir(Path(file_path).parent):
+                return file_path
             else:
                 raise Warning('file_path given, but it´s not valid.')
 
@@ -136,7 +136,7 @@ class Settings(SettingsBase):
         else:
             target_path = self.base_directory
 
-        file_name = kwargs.get('file_name') or kwargs.get('default_file_name')
+        file_name = file_name or default_file_name
 
         return os.path.join(target_path, file_name)
 

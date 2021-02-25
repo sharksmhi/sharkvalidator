@@ -47,12 +47,10 @@ class DataFrames(dict):
         for key, item in kwargs.items():
             setattr(self, key, item)
 
-    def append_new_frame(self, **kwargs):
-        element_name = kwargs.get('name')
-        data = kwargs.get('data')
-        if element_name:
+    def append_new_frame(self, name=None, data=None, **kwargs):
+        if name:
             # print('New data added for {}'.format(name))
-            self.setdefault(element_name, Frame(data))
+            self.setdefault(name, Frame(data))
             # self[name].convert_formats()
             # self[name].exclude_flagged_data()
 
@@ -63,14 +61,8 @@ class MultiDeliveries(dict):
     Perhaps we can settle with just an ordinary dictionary..
     Time will tell..
     """
-    def append_new_delivery(self, **kwargs):
-        """
-
-        :param kwargs:
-        :return:
-        """
-        delivery_name = kwargs.get('name')
-        data = kwargs.get('data')
+    def append_new_delivery(self, name=None, data=None, **kwargs):
+        delivery_name = name
         if delivery_name:
             # print('New data added for {}'.format(name))
             self.setdefault(delivery_name, data)

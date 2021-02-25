@@ -39,13 +39,13 @@ class FormatValidator(Validator):
         for key, item in kwargs.items():
             setattr(self, key, item)
 
-    def validate(self, delivery, **kwargs):
+    def validate(self, delivery, disapproved_only=None, **kwargs):
         """"""
         assert self.format_validators
         assert self.parameters
         print('Validating: {}'.format(self.__class__.__name__))
 
-        report = {'disapproved': {}} if kwargs.get('disapproved_only') else {'approved': {}, 'disapproved': {}}
+        report = {'disapproved': {}} if disapproved_only else {'approved': {}, 'disapproved': {}}
 
         for key, item in self.format_validators.items():
             if isinstance(item, dict):
@@ -65,7 +65,7 @@ class FormatValidator(Validator):
                     if validation_result.get('validation'):
                         report_key = ' - '.join((element, parameter))
                         if validation_result.get('approved'):
-                            if not kwargs.get('disapproved_only'):
+                            if not disapproved_only:
                                 report['approved'].setdefault(report_key, 'Format OK!')
                         else:
                             report['disapproved'].setdefault(report_key, validation_result.get('text'))
@@ -107,7 +107,7 @@ class CodeValidator(Validator):
                 s.add(v.strip())
         return s
 
-    def validate(self, serie):
+    def validate(self, serie, **kwargs):
         """"""
         result = {
             'validation': False,
@@ -138,7 +138,7 @@ class DateTimeValidator(Validator):
         for key, item in kwargs.items():
             setattr(self, key, item)
 
-    def validate(self, serie):
+    def validate(self, serie, **kwargs):
         """"""
         result = {
             'validation': False,
@@ -167,7 +167,7 @@ class FreeTextValidator(Validator):
         for key, item in kwargs.items():
             setattr(self, key, item)
 
-    def validate(self, serie):
+    def validate(self, serie, **kwargs):
         """"""
         result = {
             'validation': False,
@@ -189,7 +189,7 @@ class PositionValidator(Validator):
         for key, item in kwargs.items():
             setattr(self, key, item)
 
-    def validate(self, serie):
+    def validate(self, serie, **kwargs):
         """"""
         result = {
             'validation': False,
@@ -223,7 +223,7 @@ class RangeValidator(Validator):
         for key, item in kwargs.items():
             setattr(self, key, item)
 
-    def validate(self, serie):
+    def validate(self, serie, **kwargs):
         """"""
         result = {
             'validation': False,

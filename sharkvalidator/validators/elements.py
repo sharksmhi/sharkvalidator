@@ -18,8 +18,8 @@ class ElementValidator(Validator):
         for key, item in kwargs.items():
             setattr(self, key, item)
 
-    def validate(self, delivery, **kwargs):
-        report = {'disapproved': {}} if kwargs.get('disapproved_only') else {'approved': {}, 'disapproved': {}}
+    def validate(self, delivery, disapproved_only=None, **kwargs):
+        report = {'disapproved': {}} if disapproved_only else {'approved': {}, 'disapproved': {}}
 
         element_list = deep_get(self.data_types, [delivery.data_type, 'element_list']) or []
 
@@ -27,7 +27,7 @@ class ElementValidator(Validator):
             if delivery[element].empty:
                 report['disapproved'].setdefault(element, 'Missing!')
             else:
-                if not kwargs.get('disapproved_only'):
+                if not disapproved_only:
                     report['approved'].setdefault(element, 'All good!')
 
         ValidatorLog.update_info(
