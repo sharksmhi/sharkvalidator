@@ -20,7 +20,7 @@ README = open('READMEpypi.rst', 'r').read()
 
 setuptools.setup(
     name=NAME,
-    version="0.1.11",
+    version="0.1.12",
     author="SMHI - NODC",
     author_email="shark@smhi.se",
     description="Validate data delivery at the Swedish NODC",

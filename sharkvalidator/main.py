@@ -39,8 +39,13 @@ class App:
             reader (str): One of the readers found in self.settings.list_of_readers
             delivery_name (str): Chosen name of delivery. Used as key in self.deliveries
         """
-        assert reader
-        assert args
+        if not reader:
+            raise ValueError('Missing reader! Please give one as input (App.read(reader=NAME_OF_READER)')
+        if reader not in self.settings.list_of_readers:
+            raise ValueError('Given reader does not exist as a valid option! (see: App.settings.list_of_readers')
+
+        if not args:
+            raise ValueError('Missing file path! Please give one as input (App.read(PATH_TO_DATA_SOURCE)')
 
         reader = self.settings.load_reader(reader)
         delivery_name = delivery_name
@@ -66,9 +71,18 @@ class App:
             validator_list (None or list): One or more validators to use in order to validate data delivery/deliveries.
                                            Available validators can be found in self.settings.list_of_validators.
                                            If no validator_list is given we use all available validators in
-                                           self.settings.validators_sorted
+                                           self.settings.list_of_validators
         """
+        if not args:
+            raise ValueError('Missing delivery names! Please give minimum one as input '
+                             '(App.validate(DELIVERY_NAME(S))')
+
         validator_list = validator_list or self.settings.validators_sorted
+
+        for v in validator_list:
+            if v not in self.settings.list_of_validators:
+                raise ValueError('The given validator ({}) does not exist as a valid option!'.format(v))
+
         for validator_name in validator_list:
             validator = self.settings.load_validator(validator_name)
             for delivery_name in args:
@@ -87,7 +101,10 @@ class App:
             writer (str): Using the given writer to write log to file.
                           Available writers can be found in self.settings.list_of_writers
         """
-        assert writer
+        if not writer:
+            raise ValueError('Missing writer! Please give one as input (App.write(writer=NAME_OF_WRITER)')
+        if writer not in self.settings.list_of_writers:
+            raise ValueError('Given writer does not exist as a valid option! (see: App.settings.list_of_writers')
 
         writer = self.settings.load_writer(writer)
         kwargs.setdefault('default_file_name', writer.default_file_name)

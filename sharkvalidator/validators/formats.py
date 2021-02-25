@@ -41,8 +41,11 @@ class FormatValidator(Validator):
 
     def validate(self, delivery, disapproved_only=None, **kwargs):
         """"""
-        assert self.format_validators
-        assert self.parameters
+        if not hasattr(self, 'format_validators'):
+            raise AttributeError('Missing "format_validators" as attribute! Please check your validator settings file')
+        if not hasattr(self, 'parameters'):
+            raise AttributeError('Missing "parameters" as attribute! Please check your validator settings file')
+
         print('Validating: {}'.format(self.__class__.__name__))
 
         report = {'disapproved': {}} if disapproved_only else {'approved': {}, 'disapproved': {}}
