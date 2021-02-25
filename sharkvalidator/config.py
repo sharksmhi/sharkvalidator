@@ -116,6 +116,18 @@ class Settings(SettingsBase):
     def validators_sorted(self):
         return sorted(self.validators)
 
+    @property
+    def list_of_readers(self):
+        return list(self.readers)
+
+    @property
+    def list_of_writers(self):
+        return list(self.writers)
+
+    @property
+    def list_of_validators(self):
+        return list(self.validators)
+
     def get_export_file_path(self, file_path=None, file_name=None, default_file_name=None, **kwargs):
         """
         Whenever there´s not an export path given by the user, we try to export elsewhere..
