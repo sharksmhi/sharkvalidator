@@ -27,7 +27,12 @@ parameters:
 import os
 import pandas as pd
 from sharkvalidator.utils import get_app_directory, CodeDict, floatable
+from sharkvalidator.handler import Frame
 from sharkvalidator.validators.validator import Validator, ValidatorLog
+
+
+def duplicate_result():
+    return 'Duplicated parameters/fields in datafile'
 
 
 class FormatValidator(Validator):
@@ -64,10 +69,15 @@ class FormatValidator(Validator):
 
             for element, df in delivery.items():
                 if parameter in df:
-                    print(df)
-                    print(parameter)
-                    print(df[parameter])
+                    if type(df[parameter]) == Frame:
+                        # TODO should probably move this to a seperate validator.
+                        duplicate_text = duplicate_result()
+                        report_key = ' - '.join((element, parameter))
+                        report['disapproved'].setdefault(report_key, duplicate_text)
+                        continue
+
                     validation_result = validator.validate(df[parameter])
+
                     if validation_result.get('validation'):
                         report_key = ' - '.join((element, parameter))
                         if validation_result.get('approved'):
@@ -161,8 +171,6 @@ class DateTimeValidator(Validator):
             'text': '',
         }
         boolean = serie.ne('')
-        print(serie.name)
-        print(boolean)
         if boolean.any():
             result['validation'] = True
             try:

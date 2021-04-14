@@ -56,8 +56,8 @@ class ValidatorLog:
             for a in args:
                 self.log['etc'].append(a)
 
-        # if reset_log:
-        #     self.log = {}
+        if reset_log:
+            self._reset_log()
 
         if delivery_name:
 
@@ -71,7 +71,9 @@ class ValidatorLog:
                 )
 
     @classmethod
-    def update_info(cls, *args, reset_log=None, **kwargs):
-        if reset_log:
-            cls.log = {}
+    def update_info(cls, *args, **kwargs):
         return cls(*args, **kwargs)
+
+    @classmethod
+    def _reset_log(cls):
+        cls.log = {}
