@@ -2,7 +2,7 @@ description: Reader for zip files according to SHARKzip format
 name: phytop_sharkzip
 data_type: phytoplankton
 reader: !!python/name:sharkvalidator.readers.shark.SharkzipReader ''
-files_startswith: 'SHARK_Phytoplankton'
+files_startswith: 'SHARK_'
 elements:
     # element_specifier: can be a file_name, excel sheet_name or perhaps something else?
     # key_values below are considered standard archive structure

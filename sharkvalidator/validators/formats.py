@@ -64,6 +64,9 @@ class FormatValidator(Validator):
 
             for element, df in delivery.items():
                 if parameter in df:
+                    print(df)
+                    print(parameter)
+                    print(df[parameter])
                     validation_result = validator.validate(df[parameter])
                     if validation_result.get('validation'):
                         report_key = ' - '.join((element, parameter))
@@ -158,6 +161,8 @@ class DateTimeValidator(Validator):
             'text': '',
         }
         boolean = serie.ne('')
+        print(serie.name)
+        print(boolean)
         if boolean.any():
             result['validation'] = True
             try:
