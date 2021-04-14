@@ -9,6 +9,7 @@ Created on 2020-12-15 14:10
 from sharkvalidator.config import Settings
 from sharkvalidator.handler import DataFrames, MultiDeliveries
 from sharkvalidator.validators.validator import ValidatorLog
+from sharkvalidator.utils import TranslateHeader
 
 
 class App:
@@ -42,7 +43,8 @@ class App:
         if not reader:
             raise ValueError('Missing reader! Please give one as input (App.read(reader=NAME_OF_READER)')
         if reader not in self.settings.list_of_readers:
-            raise ValueError('Given reader does not exist as a valid option! (see: App.settings.list_of_readers')
+            raise ValueError('Given reader does not exist as a valid option! '
+                             '(valid options: {}'.format(', '.join(self.settings.list_of_readers)))
 
         if not args:
             raise ValueError('Missing file path! Please give one as input (App.read(PATH_TO_DATA_SOURCE)')
@@ -81,7 +83,8 @@ class App:
 
         for v in validator_list:
             if v not in self.settings.list_of_validators:
-                raise ValueError('The given validator ({}) does not exist as a valid option!'.format(v))
+                raise ValueError('The given validator ({}) does not exist as a valid option! '
+                                 '(valid options: {}'.format(v, ', '.join(self.settings.list_of_writers)))
 
         for validator_name in validator_list:
             validator = self.settings.load_validator(validator_name)
@@ -104,7 +107,8 @@ class App:
         if not writer:
             raise ValueError('Missing writer! Please give one as input (App.write(writer=NAME_OF_WRITER)')
         if writer not in self.settings.list_of_writers:
-            raise ValueError('Given writer does not exist as a valid option! (see: App.settings.list_of_writers')
+            raise ValueError('The given writer does not exist as a valid option! '
+                             '(valid options: {}'.format(', '.join(self.settings.list_of_writers)))
 
         writer = self.settings.load_writer(writer)
         kwargs.setdefault('default_file_name', writer.default_file_name)

@@ -13,6 +13,7 @@ from collections import Mapping
 from datetime import datetime
 from pyproj import Proj, CRS, transform
 from decimal import Decimal, ROUND_HALF_UP
+from sharkvalidator.readers.txt import text_reader
 
 
 def get_app_directory():
@@ -25,6 +26,14 @@ def deep_get(d, keys):
     if not keys:
         return d
     return deep_get(d.get(keys[0]), keys[1:])
+
+
+def floatable(x):
+    try:
+        float(x)
+    except ValueError:
+        return False
+    return True
 
 
 def decmin_to_decdeg(pos, string_type=True, decimals=4):
@@ -164,8 +173,68 @@ class CodeDict(dict):
         return self.get(self.mapper.get(item, item))
 
     def setdefault_values(self, k, default):
-        if k == 'WINDIR':
-            s = deepcopy(default)
-            for v in s:
-                default.add(v.zfill(2))
+        if k == 'WINDIR' or k == 'CURDIR':
+            default |= set(v for v in default)
+            default |= set(v.zfill(2) for v in default)
+            default |= set('0')
         self[k] = self[k] if k in self else default
+
+
+class MappingDict(dict):
+    def __init__(self, seq=None, **kwargs):
+        super().__init__(seq=None, **kwargs)
+
+    def setdefault_values(self, k, default):
+        if k and default:
+            self[k] = self[k] if k in self else default
+
+
+class TranslateHeader:
+    data = MappingDict()
+
+    def __init__(self):
+        df = text_reader(
+            'pandas',
+            r'C:\Arbetsmapp\config\translate_headers.txt',
+            sep='\t',
+            header=0,
+            encoding='cp1252',
+            dtype=str,
+            keep_default_na=False,
+        )
+        for row in df.itertuples():
+            self.data.setdefault_values(row.internal_key, row.short)
+            self.data.setdefault_values(row.english, row.short)
+            self.data.setdefault_values(row.swedish, row.short)
+            self.data.setdefault_values(row.darwin_core, row.short)
+
+    @classmethod
+    def map_get(cls, key):
+        return cls.data.get(key, key)
+
+
+class TranslateParameters:
+    data = MappingDict()
+
+    def __init__(self):
+        df = text_reader(
+            'pandas',
+            r'C:\Arbetsmapp\config\translate_parameters.txt',
+            sep='\t',
+            header=0,
+            encoding='cp1252',
+            dtype=str,
+            keep_default_na=False,
+        )
+        for row in df.itertuples():
+            if row.short_param_name:
+                self.data.setdefault_values(row.english_param_name, row.short_param_name)
+                self.data.setdefault_values(row.swedish_param_name, row.short_param_name)
+
+    @classmethod
+    def map_get(cls, key):
+        return cls.data.get(key, key)
+
+
+if __name__ == '__main__':
+    TranslateParameters()

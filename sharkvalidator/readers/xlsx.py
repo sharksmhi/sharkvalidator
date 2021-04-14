@@ -33,9 +33,6 @@ class PandasReaderBase(Reader):
         xl = pd.ExcelFile('foo.xls')
         xl.sheet_names  # see all sheet names
         xl.parse(sheet_name)  # read a specific sheet to DataFrame
-        :param args:
-        :param kwargs:
-        :return:
         """
         return pd.ExcelFile(*args, **kwargs)
 

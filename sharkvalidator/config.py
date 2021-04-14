@@ -11,12 +11,21 @@ import requests
 from copy import deepcopy
 from pathlib import Path
 from sharkvalidator.readers.yml import yaml_reader
-from sharkvalidator.utils import generate_filepaths, get_app_directory, recursive_dict_update
+from sharkvalidator.readers.txt import text_reader
+from sharkvalidator.utils import (
+    generate_filepaths,
+    get_app_directory,
+    recursive_dict_update,
+    TranslateHeader,
+    TranslateParameters,
+)
 
 
 class SettingsBase:
     def __init__(self, *args, **kwargs):
         super().__init__()
+        TranslateHeader()
+        TranslateParameters()
         self.default_attributes = None
         self.readers = {}
         self.writers = {}

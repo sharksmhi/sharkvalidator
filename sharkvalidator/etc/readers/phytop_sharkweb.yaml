@@ -1,0 +1,14 @@
+description: Reader for txt files according to SHARKweb format
+name: phytop_sharkweb
+data_type: phytoplankton
+reader: !!python/name:sharkvalidator.readers.shark.SharkwebReader ''
+elements:
+    # element_specifier: can be a file_name, excel sheet_name or perhaps something else?
+    # key_values below are considered standard archive structure
+    data:
+        element_specifier: none
+        header: 0
+        sep: "\t"
+        encoding: "cp1252"
+        dtype: !!python/str
+        keep_default_na: false

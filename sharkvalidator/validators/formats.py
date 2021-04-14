@@ -26,7 +26,7 @@ parameters:
 """
 import os
 import pandas as pd
-from sharkvalidator.utils import get_app_directory, CodeDict
+from sharkvalidator.utils import get_app_directory, CodeDict, floatable
 from sharkvalidator.validators.validator import Validator, ValidatorLog
 
 
@@ -46,7 +46,7 @@ class FormatValidator(Validator):
         if not hasattr(self, 'parameters'):
             raise AttributeError('Missing "parameters" as attribute! Please check your validator settings file')
 
-        print('Validating: {}'.format(self.__class__.__name__))
+        # print('Validating: {}'.format(self.__class__.__name__))
 
         report = {'disapproved': {}} if disapproved_only else {'approved': {}, 'disapproved': {}}
 
@@ -99,15 +99,24 @@ class CodeValidator(Validator):
         self.code_list = CodeDict()
         for attr in cl['Data_field'].unique():
             boolean = cl['Data_field'] == attr
-            self.code_list.setdefault_values(attr, set(cl.loc[boolean, 'Code'].values))
+            set_with_values = set(cl.loc[boolean, 'Code'].values)
+            if attr in ['DTYPE', 'LABO', 'PROJ', 'MATRX', 'METCU',
+                        'METFP', 'METOA', 'METST', 'MPROG', 'MSTAT',
+                        'MUNIT', 'NTYPE', 'OBSPOINT', 'PARAM', 'PDMET',
+                        'POSYS', 'PURPM', 'REFSK', 'RLIST', 'SEXCODE',
+                        'SFLAG', 'SIZRF', 'SMTYP', 'SPLIT', 'STAGE', 'STRID',
+                        'SUBST', 'TALGAE', 'TRPHY', 'WLTYP']:
+                set_with_values |= set(cl.loc[boolean, 'Beskrivning/Svensk översättning'].values)
+                set_with_values |= set(cl.loc[boolean, 'Description/English translate'].values)
+
+            self.code_list.setdefault_values(attr, set_with_values)
 
     @staticmethod
     def unique_values(values):
         """"""
         s = set()
         for string in values:
-            for v in string.split(','):
-                s.add(v.strip())
+            s |= set(v.strip() for v in string.split(','))
         return s
 
     def validate(self, serie, **kwargs):
@@ -245,6 +254,9 @@ class RangeValidator(Validator):
                     result['text'] = 'Values outside range ({} - {})'.format(self.lower_range, self.upper_range)
             except ValueError:
                 result['approved'] = False
+                float_boolean = serie[boolean].apply(lambda x: floatable(x))
+                unvalid_values = ', '.join(serie[boolean][~float_boolean].unique())
                 result['text'] = 'ValueError! string instead of interger or float values? ' \
-                                 'or maybe decimal sign: comma instead of dot?'
+                                 'or maybe decimal sign: comma instead of dot? ' \
+                                 'Look up the following values: {}'.format(unvalid_values)
         return result

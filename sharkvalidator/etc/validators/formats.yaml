@@ -13,6 +13,8 @@ format_validators:
         validator: !!python/name:sharkvalidator.validators.formats.PositionValidator ''
     range:
         validator: !!python/name:sharkvalidator.validators.formats.RangeValidator ''
+    type:
+        validator: !!python/name:sharkvalidator.validators.formats.RangeValidator ''
 
 parameters:
     MYEAR:
@@ -54,6 +56,22 @@ parameters:
         format_validator: position
         lower_range: 300
         upper_range: 3300
+    LATIT_DM:
+        format_validator: position
+        lower_range: 5350
+        upper_range: 6600
+    LONGI_DM:
+        format_validator: position
+        lower_range: 300
+        upper_range: 3300
+    LATIT_DD:
+        format_validator: position
+        lower_range: 53.5
+        upper_range: 66.0
+    LONGI_DD:
+        format_validator: position
+        lower_range: 3.0
+        upper_range: 33.0
     POSYS:
         format_validator: code
     WADEP:
@@ -219,7 +237,7 @@ parameters:
     AMON:
         format_validator: range
         lower_range: 0
-        upper_range: 100
+        upper_range: 1000
     Q_AMON:
         format_validator: code
     NTOT:
@@ -249,7 +267,7 @@ parameters:
     DOC:
         format_validator: range
         lower_range: 0
-        upper_range: 200
+        upper_range: 2000
     Q_DOC:
         format_validator: code
     POC:
@@ -331,4 +349,10 @@ parameters:
     ALABO:
         format_validator: code
     ACKR_ANA:
+        format_validator: code
+    VALUE:
+        format_validator: range
+        lower_range: 0
+        upper_range: 100000000
+    QFLAG:
         format_validator: code

@@ -8,6 +8,7 @@ Created on 2021-01-05 09:38
 """
 from abc import ABC
 import pandas as pd
+from sharkvalidator.utils import TranslateHeader, TranslateParameters
 
 
 class Frame(pd.DataFrame, ABC):
@@ -23,6 +24,11 @@ class Frame(pd.DataFrame, ABC):
 
     def convert_formats(self):
         self[self.data_columns] = self[self.data_columns].astype(float)
+
+    def translation(self):
+        self.rename(columns=TranslateHeader.data, inplace=True)
+        if 'PARAM' in self.columns:
+            self['PARAM'] = self['PARAM'].apply(lambda x: TranslateParameters.map_get(x))
 
     @property
     def data_columns(self):
@@ -51,6 +57,7 @@ class DataFrames(dict):
         if name:
             # print('New data added for {}'.format(name))
             self.setdefault(name, Frame(data))
+            self[name].translation()
             # self[name].convert_formats()
             # self[name].exclude_flagged_data()
 
@@ -66,3 +73,7 @@ class MultiDeliveries(dict):
         if delivery_name:
             # print('New data added for {}'.format(name))
             self.setdefault(delivery_name, data)
+
+    def drop_delivery(self, name=None):
+        if name in self:
+            self.pop(name)

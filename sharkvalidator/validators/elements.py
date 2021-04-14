@@ -24,7 +24,9 @@ class ElementValidator(Validator):
         element_list = deep_get(self.data_types, [delivery.data_type, 'element_list']) or []
 
         for element in element_list:
-            if delivery[element].empty:
+            if not delivery.__contains__(element):
+                report['disapproved'].setdefault(element, 'Missing!')
+            elif delivery[element].empty:
                 report['disapproved'].setdefault(element, 'Missing!')
             else:
                 if not disapproved_only:
