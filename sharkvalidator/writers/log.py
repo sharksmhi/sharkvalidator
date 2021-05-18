@@ -21,10 +21,17 @@ class ValidationWriter(WriterBase):
             setattr(self, key, item)
 
     @staticmethod
-    def write(file_path, **kwargs):
+    def write(file_path, exclude_approved_formats=False, **kwargs):
+        log_copy = ValidatorLog.log.copy()
+        if exclude_approved_formats:
+            for key, item in log_copy.items():
+                if 'formats' in item:
+                    if not any(item['formats']['disapproved']):
+                        del log_copy[key]
+
         with open(file_path, 'w') as file:
             yaml.safe_dump(
-                ValidatorLog.log,
+                log_copy,
                 file,
                 indent=4,
                 width=120,

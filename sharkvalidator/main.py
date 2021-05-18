@@ -114,5 +114,7 @@ class App:
         kwargs.setdefault('default_file_name', writer.default_file_name)
         file_path = self.settings.get_export_file_path(**kwargs)
 
+        kwargs.pop('file_path')
+        print('file_path', file_path)
         writer.write(file_path, **kwargs)
         print('Writer done!')

@@ -35,7 +35,7 @@ class EssentialValidator(Validator):
                     else:
                         report['disapproved'].setdefault(report_key, 'Missing values')
                 else:
-                    report['disapproved'].setdefault(report_key, 'Missing parameter')
+                    report['disapproved'].setdefault(report_key, 'Missing this parameter/column')
 
         ValidatorLog.update_info(
             delivery_name=delivery.name,

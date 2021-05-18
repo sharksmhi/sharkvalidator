@@ -144,11 +144,19 @@ class CodeValidator(Validator):
             result['validation'] = True
             try:
                 valid_codes = self.code_list.map_get(serie.name)
-                codes = (True if c in valid_codes else False for c in self.unique_values(serie[boolean].unique()))
-                if not all(codes):
+                codes = set()
+                for value in self.unique_values(serie[boolean].unique()):
+                    codes |= set(v.strip() for v in value.split(','))
+                code_boolean = [True if c in valid_codes else False for c in codes]
+                if not all(code_boolean):
                     result['approved'] = False
-                    result['text'] = 'Codes are inconsistent with standard code format of {}'\
-                        .format(self.code_list.mapper.get(serie.name, serie.name))
+                    unvalid_values = ', '.join((c for c, bol in zip(codes, code_boolean) if not bol))
+                    result['text'] = 'Codes are inconsistent with standard code format of {}. ' \
+                                     'Look up the following values: {}'.format(self.code_list.mapper.get(
+                        serie.name, serie.name
+                    ),
+                        unvalid_values
+                    )
             except ValueError:
                 result['approved'] = False
                 result['text'] = 'ValueError! string instead of interger or float values?'

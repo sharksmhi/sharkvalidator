@@ -16,13 +16,13 @@ from sharkvalidator.validators.validator import ValidatorLog
 
 if __name__ == '__main__':
 
-    path_to_zips = 'PATH_TO_zipfiles'
+    path_to_zips = r'........\sharkweb\SHARKdata_datasets'
 
     app = App()
 
     dtypes = (
         # 'Bacterioplankton', 'Chlorophyll', 'Epibenthos',
-        'HarbourSeal', 'GreySeal',
+        # 'HarbourSeal', 'GreySeal',
         # 'HarbourPorpoise',
         'PhysicalChemical',
         # 'Profile', 'Phytoplankton',
