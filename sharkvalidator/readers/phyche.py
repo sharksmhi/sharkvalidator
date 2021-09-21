@@ -68,7 +68,7 @@ class PhysicalChemicalLIMSReader(PandasTxtReader):
                     boolean = df[key].str.contains(qf, regex=False)
                     if boolean.any():
                         df.loc[boolean, key] = df.loc[boolean, key].str.replace(qf, '')
-                        df.loc[boolean, 'Q_'+key] = qf
+                        df.loc[boolean, 'Q_' + key] = qf
         return df
 
     def _activate_files(self, *args, **kwargs):

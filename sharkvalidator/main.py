@@ -7,7 +7,6 @@ Created on 2020-12-15 14:10
 """
 from sharkvalidator.config import Settings
 from sharkvalidator.handler import DataFrames, MultiDeliveries
-from sharkvalidator.validators.validator import ValidatorLog
 
 
 class App:

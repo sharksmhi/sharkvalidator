@@ -196,8 +196,8 @@ class CodeValidator(Validator):
                         (c for c, bol in zip(codes, code_boolean) if not bol)
                     )
                     result['text'] = 'Codes are inconsistent with standard code format of {}. ' \
-                                     'Look up the following values: {}'\
-                        .format(self.code_list.mapper.get(serie.name, serie.name),
+                                     'Look up the following values: {}'.format(
+                        self.code_list.mapper.get(serie.name, serie.name),
                         unvalid_values
                     )
             except ValueError:
