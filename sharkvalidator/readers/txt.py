@@ -1,10 +1,9 @@
-# Copyright (c) 2020 SMHI, Swedish Meteorological and Hydrological Institute 
+# Copyright (c) 2020 SMHI, Swedish Meteorological and Hydrological Institute.
 # License: MIT License (see LICENSE.txt or http://opensource.org/licenses/mit).
 """
 Created on 2020-12-15 13:59
 
 @author: johannes
-
 """
 import pandas as pd
 import numpy as np
@@ -12,32 +11,27 @@ from sharkvalidator.readers.reader import Reader
 
 
 class NumpyReaderBase:
-    """
-    """
+    """Numpy Base Reader."""
+
     def __init__(self):
+        """Initialize."""
         super().__init__()
 
     @staticmethod
     def read(*args, **kwargs):
-        """
-        :param args:
-        :param kwargs:
-        :return:
-        """
+        """Return data from numpy.loadtxt()."""
         return np.loadtxt(*args, **kwargs)
 
 
 class PandasReaderBase(Reader):
-    """
-    """
+    """Pandas Base Reader."""
+
     def __init__(self, *args, **kwargs):
+        """Initialize."""
         super().__init__()
 
     def get(self, item):
-        """
-        :param item: str
-        :return:
-        """
+        """Return value for "item"."""
         if item in self.__dict__.keys():
             return self.__getattribute__(item)
         else:
@@ -46,51 +40,40 @@ class PandasReaderBase(Reader):
 
     @staticmethod
     def read(*args, **kwargs):
-        """
-        :param args: tuple
-            Expects:
-                file_path
-        :param kwargs: dict
-            Addition:
-                header
-                sep
-                encoding
-                dtype
-                keep_default_na
-        :return:
-        """
+        """Return data from pd.read_csv()."""
         return pd.read_csv(*args, **kwargs).fillna('')
 
 
 class NoneReaderBase:
-    """
-    Dummy base
-    """
+    """Dummy base."""
+
     def __init__(self):
+        """Initialize."""
         super().__init__()
 
     @staticmethod
     def read(*args, **kwargs):
+        """Dummy reader."""
         print('Warning! No data was read due to unrecognizable reader type')
 
 
 class PandasTxtReader(PandasReaderBase):
-    """
-    Reads txt / csv files
-    """
+    """Read txt / csv files with pandas."""
+
     def __init__(self, *args, **kwargs):
+        """Initialize."""
         super().__init__()
         for key, item in kwargs.items():
             setattr(self, key, item)
 
 
 def text_reader(reader_type, *args, **kwargs):
-    """
-    Dynamic text reader.
-    :param reader_type: str, decides what type of reader base to be used.
-    :param args: tuple
-    :param kwargs: dict
-    :return:
+    """Dynamic text reader.
+
+    Args:
+        reader_type (str): decides what type of reader base to be used.
+        *args: args to pass on to validator.
+        **kwargs: kwargs to pass on to reader.
     """
     if reader_type == 'pandas':
         base = PandasReaderBase
@@ -100,9 +83,10 @@ def text_reader(reader_type, *args, **kwargs):
         base = NoneReaderBase
 
     class TextReader(base):
-        """
-        """
+        """Reader who inherits from the selected reader_type (base)."""
+
         def __init__(self):
+            """Initialize."""
             super().__init__()
 
     tr = TextReader()

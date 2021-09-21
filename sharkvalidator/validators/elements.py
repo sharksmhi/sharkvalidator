@@ -1,24 +1,30 @@
-# Copyright (c) 2021 SMHI, Swedish Meteorological and Hydrological Institute 
+# Copyright (c) 2021 SMHI, Swedish Meteorological and Hydrological Institute.
 # License: MIT License (see LICENSE.txt or http://opensource.org/licenses/mit).
 """
 Created on 2021-01-07 15:54
 
 @author: johannes
-
 """
 from sharkvalidator.validators.validator import Validator, ValidatorLog
 from sharkvalidator.utils import deep_get
 
 
 class ElementValidator(Validator):
+    """Validator for elements in delivery.
+
+    In order for this validation to pass we need all element of a
+    delivery to be in place with the correct name.
+
+    Example: A physical and chemical delivery
+    should include the following excel sheets:
+        - "Förklaring" (delivery_note)
+        - "Kolumner" (data)
+        - "Analysinfo" (analyse_info)
+        - "Provtagningsinfo" (sampling_info)
     """
-    """
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for key, item in kwargs.items():
-            setattr(self, key, item)
 
     def validate(self, delivery, disapproved_only=None, **kwargs):
+        """Validate to see if delivery contains all mandatory "elements"."""
         report = {'disapproved': {}} if disapproved_only else {'approved': {}, 'disapproved': {}}
 
         element_list = deep_get(self.data_types, [delivery.data_type, 'element_list']) or []

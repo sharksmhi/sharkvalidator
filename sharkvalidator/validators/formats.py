@@ -1,4 +1,4 @@
-# Copyright (c) 2020 SMHI, Swedish Meteorological and Hydrological Institute 
+# Copyright (c) 2020 SMHI, Swedish Meteorological and Hydrological Institute.
 # License: MIT License (see LICENSE.txt or http://opensource.org/licenses/mit).
 """
 Created on 2020-12-16 13:52
@@ -26,66 +26,109 @@ parameters:
 """
 import os
 import pandas as pd
-from sharkvalidator.utils import get_app_directory, CodeDict, floatable
+from sharkvalidator.utils import (
+    get_app_directory,
+    CodeDict,
+    floatable,
+)
 from sharkvalidator.handler import Frame
 from sharkvalidator.validators.validator import Validator, ValidatorLog
 
 
 def duplicate_result():
+    """Return string on duplicated parameters."""
     return 'Duplicated parameters/fields in datafile'
 
 
 class FormatValidator(Validator):
+    """Node class for format validators.
+
+    In order for these format validators to pass we need values for all
+    parameters of the delivery to pass the given validator for the specific parameter.
+
+    Example: A physical and chemical delivery may include values for
+    numerous fields, some of them are:
+        - PROJ (code validation)
+        - LATIT/LONGI (position validation)
+        - SDATE (datetime validation)
+        - TEMP_CTD (range validation)
     """
-    Node class for format validators.
-    """
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for key, item in kwargs.items():
-            setattr(self, key, item)
 
     def validate(self, delivery, disapproved_only=None, **kwargs):
-        """"""
+        """Validate data field formats.
+
+        Args:
+            delivery (dict): Delivery with its elements.
+            disapproved_only (bool): If set to True the ValidatorLog will only
+                                     include disapproved validation information.
+            **kwargs:
+        """
         if not hasattr(self, 'format_validators'):
-            raise AttributeError('Missing "format_validators" as attribute! Please check your validator settings file')
+            raise AttributeError(
+                'Missing "format_validators" as attribute! '
+                'Please check your validator settings file'
+            )
         if not hasattr(self, 'parameters'):
-            raise AttributeError('Missing "parameters" as attribute! Please check your validator settings file')
+            raise AttributeError(
+                'Missing "parameters" as attribute! '
+                'Please check your validator settings file'
+            )
 
-        # print('Validating: {}'.format(self.__class__.__name__))
+        if disapproved_only:
+            report = {'disapproved': {}}
+        else:
+            report = {'approved': {}, 'disapproved': {}}
 
-        report = {'disapproved': {}} if disapproved_only else {'approved': {}, 'disapproved': {}}
-
+        # Initiate format validators (eg. CodeValidator, DateTimeValidator, etc).
         for key, item in self.format_validators.items():
             if isinstance(item, dict):
                 validator = item.get('validator')
-                self.format_validators[key] = validator(**{k: i for k, i in item.items() if k != 'validator'})
+                self.format_validators[key] = validator(
+                    **{k: i for k, i in item.items() if k != 'validator'}
+                )
 
+        # Each parameter is connected to a certain validator called "format_validator".
         for parameter, item in self.parameters.items():
             validator = self.format_validators.get(item.get('format_validator'))
             if validator:
-                validator.update_attributes(**{k: i for k, i in item.items() if k != 'format_validator'})
+                validator.update_attributes(
+                    **{k: i for k, i in item.items() if k != 'format_validator'}
+                )
             else:
+                # No validator, jump to next loop iteration (next parameter).
+                # TODO: Raise Warning?
                 continue
 
+            # Validator exsits.
             for element, df in delivery.items():
                 if parameter in df:
                     if type(df[parameter]) == Frame:
                         # TODO should probably move this to a seperate validator.
+                        #  Not quite sur about when/why this condition becomes true.
+                        #  Concerning duplicate parameters (?).
                         duplicate_text = duplicate_result()
                         report_key = ' - '.join((element, parameter))
                         report['disapproved'].setdefault(report_key, duplicate_text)
                         continue
 
+                    # Validate field.
                     validation_result = validator.validate(df[parameter])
 
                     if validation_result.get('validation'):
                         report_key = ' - '.join((element, parameter))
                         if validation_result.get('approved'):
                             if not disapproved_only:
-                                report['approved'].setdefault(report_key, 'Format OK!')
+                                report['approved'].setdefault(
+                                    report_key,
+                                    'Format OK!'
+                                )
                         else:
-                            report['disapproved'].setdefault(report_key, validation_result.get('text'))
+                            report['disapproved'].setdefault(
+                                report_key,
+                                validation_result.get('text')
+                            )
 
+        # Report validation information to log.
         ValidatorLog.update_info(
             delivery_name=delivery.name,
             validator_name=self.name,
@@ -94,12 +137,11 @@ class FormatValidator(Validator):
 
 
 class CodeValidator(Validator):
-    """
-    """
+    """Validator for codes."""
+
     def __init__(self, *args, **kwargs):
+        """Initialize and set attributes from kwargs."""
         super().__init__(*args, **kwargs)
-        for key, item in kwargs.items():
-            setattr(self, key, item)
 
         # TODO we probably want an API solution here..
         cl = pd.read_excel(
@@ -126,14 +168,14 @@ class CodeValidator(Validator):
 
     @staticmethod
     def unique_values(values):
-        """"""
+        """Return set of values."""
         s = set()
         for string in values:
             s |= set(v.strip() for v in string.split(','))
         return s
 
     def validate(self, serie, **kwargs):
-        """"""
+        """Validate codes in serie."""
         result = {
             'validation': False,
             'approved': True,
@@ -164,15 +206,10 @@ class CodeValidator(Validator):
 
 
 class DateTimeValidator(Validator):
-    """
-    """
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for key, item in kwargs.items():
-            setattr(self, key, item)
+    """Validator for DateTime formats."""
 
     def validate(self, serie, **kwargs):
-        """"""
+        """Validate date/time values in serie."""
         result = {
             'validation': False,
             'approved': True,
@@ -193,15 +230,10 @@ class DateTimeValidator(Validator):
 
 
 class FreeTextValidator(Validator):
-    """
-    """
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for key, item in kwargs.items():
-            setattr(self, key, item)
+    """Validator for text formats."""
 
     def validate(self, serie, **kwargs):
-        """"""
+        """Validate text values in serie."""
         result = {
             'validation': False,
             'approved': True,
@@ -210,26 +242,22 @@ class FreeTextValidator(Validator):
         boolean = serie.ne('')
         if boolean.any():
             # TODO Anything?... at all?..no?.. allrighty then!
+            #  So, this check can never fail? why the fuss then?
             result['validation'] = True
         return result
 
 
 class PositionValidator(Validator):
-    """
-    """
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for key, item in kwargs.items():
-            setattr(self, key, item)
+    """Validator for position formats."""
 
     def validate(self, serie, **kwargs):
-        """"""
+        """Validate position values in serie."""
         result = {
             'validation': False,
             'approved': True,
             'text': '',
         }
-        # TODO we probably want an API solution here..
+        # TODO we probably want an microservice solution here..
         # Check aginst shapefile?
         boolean = serie.ne('')
         if boolean.any():
@@ -249,15 +277,10 @@ class PositionValidator(Validator):
 
 
 class RangeValidator(Validator):
-    """
-    """
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for key, item in kwargs.items():
-            setattr(self, key, item)
+    """Validator for range formats."""
 
     def validate(self, serie, **kwargs):
-        """"""
+        """Validate to see if values lies within the given range."""
         result = {
             'validation': False,
             'approved': True,

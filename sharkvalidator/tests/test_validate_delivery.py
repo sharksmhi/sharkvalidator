@@ -1,10 +1,9 @@
-# Copyright (c) 2020 SMHI, Swedish Meteorological and Hydrological Institute 
+# Copyright (c) 2020 SMHI, Swedish Meteorological and Hydrological Institute.
 # License: MIT License (see LICENSE.txt or http://opensource.org/licenses/mit).
 """
 Created on 2020-12-16 15:26
 
 @author: johannes
-
 """
 from sharkvalidator import App
 
@@ -25,16 +24,16 @@ if __name__ == '__main__':
     #     delivery_name='phyto_zip',
     # )
 
-    # app.read(
-    #     ...
-    #     reader='phyche_xlsx',
-    #     delivery_name='phyche_delivery',
-    # )
+    app.read(
+        r'\\WINFS\prod\shark_bio\Originalfiler_från_dataleverantörer\FysKem\PROJ_Data\SLCK_2018\arbetsmapp\Data_FysKem_2018_Kberg.xlsx',
+        reader='phyche_xlsx',
+        delivery_name='phyche_delivery',
+    )
 
     # app.read(
-    #     ...
+    #     r'\\WINFS\prod\shark_bio\Originalfiler_från_dataleverantörer\FysKem\NATIONELLA_Data\2021\BAS_EXT_SYK_SMHI\7-Jul\data_exporter\2021-08-02 756-2021-LANDSKOD 77-FARTYGSKOD 10',
     #     reader='phyche_lims',
-    #     delivery_name='lims',
+    #     delivery_name='phyche_delivery',
     # )
 
     # app.read(

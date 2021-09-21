@@ -13,12 +13,12 @@ format_validators:
         validator: !!python/name:sharkvalidator.validators.formats.PositionValidator ''
     range:
         validator: !!python/name:sharkvalidator.validators.formats.RangeValidator ''
-    type:
-        validator: !!python/name:sharkvalidator.validators.formats.RangeValidator ''
+#    type:
+#        validator: !!python/name:sharkvalidator.validators.formats.RangeValidator ''
 
 parameters:
     MYEAR:
-        format_validator: date
+        format_validator: datetime
         fmt: '%Y'
     PROJ:
         format_validator: code
@@ -37,7 +37,7 @@ parameters:
         format_validator: datetime
         fmt: '%H:%M'
     SHIPC:
-        format_validator: time
+        format_validator: code
     CRUISE_NO:
         format_validator: range
         lower_range: 1

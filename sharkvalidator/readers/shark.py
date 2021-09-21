@@ -1,7 +1,8 @@
-# Copyright (c) 2020 SMHI, Swedish Meteorological and Hydrological Institute 
+# Copyright (c) 2020 SMHI, Swedish Meteorological and Hydrological Institute.
 # License: MIT License (see LICENSE.txt or http://opensource.org/licenses/mit).
 """
 Created on 2021-04-13 15:40
+
 @author: johannes
 """
 from pathlib import Path
@@ -11,17 +12,23 @@ from sharkvalidator.readers.txt import PandasTxtReader
 
 
 class BaseSHARK(PandasTxtReader):
-    """
-    """
+    """Base Class for standard SHARKweb format."""
+
     def __init__(self, *args, **kwargs):
+        """Initialize."""
         super().__init__(*args, **kwargs)
         self.arguments = list(args)
         self.file = None
 
     def load(self, *args, **kwargs):
+        """Activate file."""
         self._activate_file(*args, **kwargs)
 
     def read_element(self, *args, **kwargs):
+        """Read data element.
+
+        Reading excel sheet into pandas.Dataframe.
+        """
         df = self._read_file(*args, **kwargs)
         if type(df) == pd.DataFrame:
             for col in ['sample_latitude_dm', 'sample_longitude_dm',
@@ -32,19 +39,23 @@ class BaseSHARK(PandasTxtReader):
         return df
 
     def _activate_file(self, *args, **kwargs):
+        """Dummy method."""
         raise NotImplementedError
 
     def _read_file(self, *args, **kwargs):
+        """Dummy method."""
         raise NotImplementedError
 
 
 class SharkwebReader(BaseSHARK):
-    """
-    """
+    """Reader SHARKweb data files."""
+
     def __init__(self, *args, **kwargs):
+        """Initialize."""
         super().__init__(*args, **kwargs)
 
     def _read_file(self, *args, **kwargs):
+        """Return dataframe."""
         if kwargs.get('dtype') == '':
             kwargs['dtype'] = str
         df = self.read(self.file, **kwargs)
@@ -52,6 +63,7 @@ class SharkwebReader(BaseSHARK):
         return df
 
     def _activate_file(self, *args, **kwargs):
+        """Return activated folder with data."""
         folder_path = Path(args[0]) if type(args) == tuple else Path(args)
         if not folder_path.exists:
             raise FileNotFoundError('Could not find the given LIMS-directory: {}'.format(folder_path))
@@ -59,12 +71,14 @@ class SharkwebReader(BaseSHARK):
 
 
 class SharkzipReader(BaseSHARK):
-    """
-    """
+    """Reader for SHARKweb zipfiles."""
+
     def __init__(self, *args, **kwargs):
+        """Initialize."""
         super().__init__(*args, **kwargs)
 
     def _read_file(self, *args, **kwargs):
+        """Read data and return dataframe."""
         if not self.file:
             return None
 
@@ -84,6 +98,7 @@ class SharkzipReader(BaseSHARK):
         return df
 
     def _activate_file(self, *args, **kwargs):
+        """Return activated zip file."""
         zip_path = Path(args[0]) if type(args) == tuple else Path(args)
         if not zip_path.exists:
             raise FileNotFoundError('Could not find the given ZIP-directory: {}'.format(zip_path))

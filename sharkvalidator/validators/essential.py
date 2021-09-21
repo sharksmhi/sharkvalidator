@@ -1,28 +1,39 @@
-# Copyright (c) 2021 SMHI, Swedish Meteorological and Hydrological Institute 
+# Copyright (c) 2021 SMHI, Swedish Meteorological and Hydrological Institute.
 # License: MIT License (see LICENSE.txt or http://opensource.org/licenses/mit).
 """
 Created on 2021-01-11 13:15
 
 @author: johannes
-
 """
 from sharkvalidator.validators.validator import Validator, ValidatorLog
 from sharkvalidator.utils import deep_get
 
 
 class EssentialValidator(Validator):
+    """Validator for essentials fields.
+
+    In order for this validation to pass we need values for all essentials of a
+    delivery to be included in the delivery.
+
+    Example: A physical and chemical delivery should include values for
+    numerous fields, some of them are:
+        - SDATE
+        - STIME
+        - STATN
+        - LATIT
+        - LONGI
+        - DEPH
+        - and many more..
     """
-    """
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for key, item in kwargs.items():
-            setattr(self, key, item)
 
     def validate(self, delivery, disapproved_only=None, **kwargs):
-        report = {'disapproved': {}} if disapproved_only else {'approved': {}, 'disapproved': {}}
+        """Validate to see if dataframe contains all "essentials" fields."""
+        if disapproved_only:
+            report = {'disapproved': {}}
+        else:
+            report = {'approved': {}, 'disapproved': {}}
 
         for element, item in delivery.items():
-
             parameter_list = deep_get(self.data_types, [delivery.data_type, element]) or []
 
             for parameter in parameter_list:
