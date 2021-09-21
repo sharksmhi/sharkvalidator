@@ -19,19 +19,19 @@ if __name__ == '__main__':
     # )
 
     # app.read(
-    #     r'C:\Temp\DV\validator_test\sharkdata\pp\SHARK_Phytoplankton_2019_SMHI_version_2020-10-27.zip',
+    #     r'..validator_test\sharkdata\pp\SHARK_Phytoplankton_2019_SMHI_version_2020-10-27.zip',
     #     reader='phytop_sharkzip',
     #     delivery_name='phyto_zip',
     # )
 
     app.read(
-        r'\\WINFS\prod\shark_bio\Originalfiler_från_dataleverantörer\FysKem\PROJ_Data\SLCK_2018\arbetsmapp\Data_FysKem_2018_Kberg.xlsx',
+        r'..SLCK_2018\arbetsmapp\Data_FysKem_2018_Kberg.xlsx',
         reader='phyche_xlsx',
         delivery_name='phyche_delivery',
     )
 
     # app.read(
-    #     r'\\WINFS\prod\shark_bio\Originalfiler_från_dataleverantörer\FysKem\NATIONELLA_Data\2021\BAS_EXT_SYK_SMHI\7-Jul\data_exporter\2021-08-02 756-2021-LANDSKOD 77-FARTYGSKOD 10',
+    #     r'..BAS_EXT_SYK_SMHI\7-Jul\data_exporter\2021-08-02 756-2021-LANDSKOD 77-FARTYGSKOD 10',
     #     reader='phyche_lims',
     #     delivery_name='phyche_delivery',
     # )

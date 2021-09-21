@@ -8,7 +8,6 @@ Created on 2020-12-15 14:10
 from sharkvalidator.config import Settings
 from sharkvalidator.handler import DataFrames, MultiDeliveries
 from sharkvalidator.validators.validator import ValidatorLog
-from sharkvalidator.utils import TranslateHeader
 
 
 class App:
@@ -48,7 +47,7 @@ class App:
         if reader not in self.settings.list_of_readers:
             raise ValueError(
                 'Given reader does not exist as a valid option! (valid options: {}'
-                    .format(', '.join(self.settings.list_of_readers))
+                ''.format(', '.join(self.settings.list_of_readers))
             )
         if not file_path:
             raise ValueError(
@@ -126,7 +125,7 @@ class App:
         if writer not in self.settings.list_of_writers:
             raise ValueError(
                 'The given writer does not exist as a valid option! (valid options: {}'
-                    .format(', '.join(self.settings.list_of_writers))
+                ''.format(', '.join(self.settings.list_of_writers))
             )
 
         writer = self.settings.load_writer(writer)

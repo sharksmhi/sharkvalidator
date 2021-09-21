@@ -24,7 +24,7 @@ class Validator(ABC):
             setattr(self, key, item)
 
     def validate(self, *args, **kwargs):
-        """Dummy method."""
+        """Validate."""
         raise NotImplementedError
 
     def update_attributes(self, **kwargs):
@@ -51,6 +51,7 @@ class ValidatorLog:
             },...
     ... }
     """
+
     log = {}
 
     def __init__(self, *args, reset_log=None, delivery_name=None,

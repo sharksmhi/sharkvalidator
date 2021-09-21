@@ -10,7 +10,6 @@ import requests
 from copy import deepcopy
 from pathlib import Path
 from sharkvalidator.readers.yml import yaml_reader
-from sharkvalidator.readers.txt import text_reader
 from sharkvalidator.utils import (
     generate_filepaths,
     get_app_directory,

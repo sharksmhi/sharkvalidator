@@ -16,9 +16,9 @@ class WriterBase(ABC):
         super().__init__()
 
     def write(self, *args, **kwargs):
-        """Dummy method."""
+        """Write."""
         raise NotImplementedError
 
     def _write(self, *args, **kwargs):
-        """Dummy method."""
+        """Write."""
         raise NotImplementedError

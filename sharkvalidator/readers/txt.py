@@ -53,7 +53,7 @@ class NoneReaderBase:
 
     @staticmethod
     def read(*args, **kwargs):
-        """Dummy reader."""
+        """Read."""
         print('Warning! No data was read due to unrecognizable reader type')
 
 

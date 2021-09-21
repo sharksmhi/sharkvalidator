@@ -16,7 +16,10 @@ class Frame(pd.DataFrame, ABC):
 
     @property
     def _constructor(self):
-        """Constructor for Frame, overides method in pandas.DataFrame."""
+        """Construct Frame.
+
+        Constructor for Frame, overides method in pandas.DataFrame.
+        """
         return Frame
 
     def convert_formats(self):
@@ -85,6 +88,7 @@ class MultiDeliveries(dict):
     Perhaps we can settle with just an ordinary dictionary..
     Time will tell..
     """
+
     def append_new_delivery(self, name=None, data=None, **kwargs):
         """Append new delivery.
 

@@ -16,11 +16,11 @@ class Reader(ABC):
         super().__init__()
 
     def load(self, *args, **kwargs):
-        """Dummy method."""
+        """Load."""
         raise NotImplementedError
 
     def read_element(self, *args, **kwargs):
-        """Dummy method."""
+        """Read."""
         raise NotImplementedError
 
     @staticmethod

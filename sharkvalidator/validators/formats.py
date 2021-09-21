@@ -192,11 +192,12 @@ class CodeValidator(Validator):
                 code_boolean = [True if c in valid_codes else False for c in codes]
                 if not all(code_boolean):
                     result['approved'] = False
-                    unvalid_values = ', '.join((c for c, bol in zip(codes, code_boolean) if not bol))
+                    unvalid_values = ', '.join(
+                        (c for c, bol in zip(codes, code_boolean) if not bol)
+                    )
                     result['text'] = 'Codes are inconsistent with standard code format of {}. ' \
-                                     'Look up the following values: {}'.format(self.code_list.mapper.get(
-                        serie.name, serie.name
-                    ),
+                                     'Look up the following values: {}'\
+                        .format(self.code_list.mapper.get(serie.name, serie.name),
                         unvalid_values
                     )
             except ValueError:
@@ -222,7 +223,8 @@ class DateTimeValidator(Validator):
                 boolean = pd.to_datetime(serie[boolean], format=self.fmt, errors='coerce').notna()
                 if not boolean.all():
                     result['approved'] = False
-                    result['text'] = 'Values are inconsistent with standard format ({})'.format(self.fmt)
+                    result['text'] = 'Values are inconsistent with standard format ({})'\
+                        .format(self.fmt)
             except ValueError:
                 result['approved'] = False
                 result['text'] = 'ValueError! string instead of interger or float values?'
@@ -268,7 +270,8 @@ class PositionValidator(Validator):
                 boolean = boolean & (float_serie <= self.upper_range)
                 if not boolean.all():
                     result['approved'] = False
-                    result['text'] = 'Values outside range ({} - {})'.format(self.lower_range, self.upper_range)
+                    result['text'] = 'Values outside range ({} - {})'\
+                        .format(self.lower_range, self.upper_range)
             except ValueError:
                 result['approved'] = False
                 result['text'] = 'ValueError! string instead of interger or float values? ' \
@@ -295,7 +298,8 @@ class RangeValidator(Validator):
                 boolean = boolean & (float_serie <= self.upper_range)
                 if not boolean.all():
                     result['approved'] = False
-                    result['text'] = 'Values outside range ({} - {})'.format(self.lower_range, self.upper_range)
+                    result['text'] = 'Values outside range ({} - {})'\
+                        .format(self.lower_range, self.upper_range)
             except ValueError:
                 result['approved'] = False
                 float_boolean = serie[boolean].apply(lambda x: floatable(x))

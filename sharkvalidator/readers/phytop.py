@@ -5,12 +5,12 @@ Created on 2021-01-07 11:15
 
 @author: johannes
 """
-from pathlib import Path
 from sharkvalidator.readers.xlsx import PandasXlsxReader
 
 
 class PhytoplanktonExcelReader(PandasXlsxReader):
     """Reader for the Phytoplankton datatype."""
+
     # TODO We probably need to extend this class? or maybe not..
 
     def __init__(self, *args, **kwargs):

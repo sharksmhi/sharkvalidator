@@ -6,11 +6,10 @@ Created on 2020-12-15 14:10
 @author: johannes
 """
 import os
-from copy import deepcopy
 import numpy as np
 from collections import Mapping
 from datetime import datetime
-from pyproj import Proj, CRS, transform
+from pyproj import CRS, transform
 from decimal import Decimal, ROUND_HALF_UP
 from sharkvalidator.readers.txt import text_reader
 
@@ -73,7 +72,7 @@ def decdeg_to_decmin(pos: (str, float), string_type=True, decimals=2) -> (str, f
 
 def generate_filepaths(directory: str, pattern=''):
     """Generate file paths."""
-    for path, subdir, fids in os.walk(directory):
+    for path, _, fids in os.walk(directory):
         for f in fids:
             if pattern in f:
                 yield os.path.abspath(os.path.join(path, f))
@@ -87,6 +86,7 @@ def get_now_time(fmt=None) -> str:
 
 def recursive_dict_update(d: dict, u: dict) -> dict:
     """Recursive dictionary update.
+
     Copied from:
         http://stackoverflow.com/questions/3232943/update-
         value-of-a-nested-dictionary-of-varying-depth
@@ -132,7 +132,7 @@ def transform_ref_system(lat=0.0, lon=0.0, in_proj='EPSG:3006', out_proj='EPSG:4
 
 def delete_key_from_dict(dictionary, key):
     """Loop recursively over nested dictionaries."""
-    for k, v in dictionary.items():
+    for v in dictionary.values():
         if key in v:
             del v[key]
         if isinstance(v, dict):
@@ -197,6 +197,7 @@ class MappingDict(dict):
 
 class TranslateHeader:
     """Class to store translate headers."""
+
     data = MappingDict()
 
     def __init__(self):
@@ -224,6 +225,7 @@ class TranslateHeader:
 
 class TranslateParameters:
     """Class to store translate parameters."""
+
     data = MappingDict()
 
     def __init__(self):
