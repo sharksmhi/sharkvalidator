@@ -5,24 +5,37 @@ Created on 2020-12-16 13:52
 
 @author: johannes
 
+See /etc/validators/formats.yaml
+
 format_validators:
     code:
         validator: !!python/name:sharkvalidator.validators.formats.CodeValidator ''
-    date:
-        validator: !!python/name:sharkvalidator.validators.formats.DateValidator ''
-        fmt: '%Y-%m-%d'
+        path_to_codelist: "etc/codelist_SMHI.xlsx"
+    datetime:
+        validator: !!python/name:sharkvalidator.validators.formats.DateTimeValidator ''
+    free_text:
+        validator: !!python/name:sharkvalidator.validators.formats.FreeTextValidator ''
     position:
         validator: !!python/name:sharkvalidator.validators.formats.PositionValidator ''
     range:
         validator: !!python/name:sharkvalidator.validators.formats.RangeValidator ''
-    time:
-        validator: !!python/name:sharkvalidator.validators.formats.TimeValidator ''
-        fmt: '%H:%M'
 
 parameters:
-    MYEAR:
-        format_validator: date
-        fmt: '%Y'
+    PROJ:
+        format_validator: code
+    SDATE:
+        format_validator: datetime
+        fmt: '%Y-%m-%d'
+    STATN:
+        format_validator: free_text
+    LATIT:
+        format_validator: position
+        lower_range: 5350
+        upper_range: 6600
+    TEMP_CTD:
+        format_validator: range
+        lower_range: -2.5
+        upper_range: 30
 """
 import os
 import pandas as pd
