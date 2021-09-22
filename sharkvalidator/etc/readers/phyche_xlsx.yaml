@@ -4,7 +4,7 @@ data_type: physicalchemical
 reader: !!python/name:sharkvalidator.readers.phyche.PhysicalChemicalExcelReader ''
 elements:
     # element_specifier: can be a file_name, excel sheet_name or perhaps something else?
-    # key_values below are considered standard archive structure
+    # arguments below are considered standard excel delivery format.
     delivery_note:
         element_specifier: "Förklaring"
         dtype: !!python/str
