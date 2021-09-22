@@ -37,7 +37,7 @@ class App:
         Args:
             file_path (str): Path to delivery
             reader (str): One of the readers found in self.settings.list_of_readers
-            delivery_name (str): path to delivery
+            delivery_name (str): Name of delivery
         """
         if not reader:
             raise ValueError(
@@ -52,10 +52,13 @@ class App:
             raise ValueError(
                 'Missing file path! Please give one as input (App.read(PATH_TO_DATA_SOURCE)'
             )
+        if not delivery_name:
+            raise ValueError(
+                'Missing delivery name! '
+                'Please give one as input (App.read(delivery_name=phyche-delivery)'
+            )
 
         reader = self.settings.load_reader(reader)
-        delivery_name = delivery_name
-
         reader.load(file_path, **kwargs)
 
         dfs = DataFrames(data_type=reader.get('data_type'), name=delivery_name)

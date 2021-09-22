@@ -14,7 +14,8 @@ format_validators:
     range:
         validator: !!python/name:sharkvalidator.validators.formats.RangeValidator ''
 #    type:
-#        validator: !!python/name:sharkvalidator.validators.formats.RangeValidator ''
+#        comment: "not implemented yet"
+#        validator: !!python/name:sharkvalidator.validators.formats.TypeValidator ''
 
 parameters:
     MYEAR:

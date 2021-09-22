@@ -3,8 +3,8 @@ name: phytop_xlsx
 data_type: phytoplankton
 reader: !!python/name:sharkvalidator.readers.phytop.PhytoplanktonExcelReader ''
 elements:
-    # element_specifier: can be a file_name, excel sheet_name or perhaps something else?
-    # key_values below are considered standard archive structure
+    # element_specifier: can be a file_name, excel-sheet_name or perhaps something else?
+    # arguments below are considered standard excel delivery format.
     delivery_note:
         element_specifier: "Förklaring"
         dtype: !!python/str
