@@ -72,7 +72,7 @@ def text_reader(reader_type, *args, **kwargs):
 
     Args:
         reader_type (str): decides what type of reader base to be used.
-        *args: args to pass on to validator.
+        *args: args to pass on to reader.
         **kwargs: kwargs to pass on to reader.
     """
     if reader_type == 'pandas':

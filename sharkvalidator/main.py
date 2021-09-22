@@ -55,7 +55,7 @@ class App:
         if not delivery_name:
             raise ValueError(
                 'Missing delivery name! '
-                'Please give one as input (App.read(delivery_name=phyche-delivery)'
+                'Please give one as input (App.read(delivery_name=NAME_OF_DELIVERY)'
             )
 
         reader = self.settings.load_reader(reader)
