@@ -24,11 +24,11 @@ if __name__ == '__main__':
     #     delivery_name='phyto_zip',
     # )
 
-    # app.read(
-    #     r'..SLCK_2018\arbetsmapp\Data_FysKem_2018_Kberg.xlsx',
-    #     reader='phyche_xlsx',
-    #     delivery_name='phyche_delivery',
-    # )
+    app.read(
+        r'C:\Temp\DV\validator_test\Format Physical and chemical 2020.xlsx',
+        reader='phyche_xlsx',
+        delivery_name='phyche_delivery',
+    )
 
     # app.read(
     #     r'..BAS_EXT_SYK_SMHI\7-Jul\data_exporter\2021-08-02 756-2021-LANDSKOD 77-FARTYGSKOD 10',
@@ -36,15 +36,15 @@ if __name__ == '__main__':
     #     delivery_name='phyche_delivery',
     # )
 
-    app.read(
-        'C:/Temp/DV/validator_test/Format_Skärgårdsprover 2020 vpl_SMHI.xlsx',
-        reader='phytop_xlsx',
-        delivery_name='svab_phyto',
-    )
+    # app.read(
+    #     'C:/Temp/DV/validator_test/Format_Skärgårdsprover 2020 vpl_SMHI.xlsx',
+    #     reader='phytop_xlsx',
+    #     delivery_name='svab_phyto',
+    # )
 
-    app.validate('svab_phyto', disapproved_only=True)
+    # app.validate('svab_phyto', disapproved_only=True)
     # app.validate('phyche', disapproved_only=True)
-    # app.validate('phyche_delivery', disapproved_only=True)
+    app.validate('phyche_delivery', disapproved_only=True)
     # app.validate('phyto_sw', disapproved_only=True)
     # app.validate('phyto_zip', validator_list=['formats'], disapproved_only=True)
 
