@@ -18,7 +18,6 @@ class App:
 
     Only for validation! Do not pass data on to other tasks!
 
-    Beautiful is better than ugly.
     Readability counts.
     """
 
