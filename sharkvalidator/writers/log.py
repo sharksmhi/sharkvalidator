@@ -13,12 +13,6 @@ from sharkvalidator.validators.validator import ValidatorLog
 class ValidationWriter(WriterBase):
     """Validation Log writer."""
 
-    def __init__(self, *args, **kwargs):
-        """Initialize."""
-        super().__init__(*args, **kwargs)
-        for key, item in kwargs.items():
-            setattr(self, key, item)
-
     @staticmethod
     def write(file_path, exclude_approved_formats=False, **kwargs):
         """Write ValidatorLog.log to file.

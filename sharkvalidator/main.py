@@ -135,5 +135,9 @@ class App:
 
         if 'file_path' in kwargs:
             kwargs.pop('file_path')
+        if 'file_name' in kwargs:
+            kwargs.pop('file_name')
+        if 'default_file_name' in kwargs:
+            kwargs.pop('default_file_name')
         writer.write(file_path, **kwargs)
         print('Writer done!')
