@@ -13,7 +13,8 @@ class WriterBase(ABC):
 
     def __init__(self, *args, **kwargs):
         """Initialize."""
-        super().__init__()
+        for key, item in kwargs.items():
+            setattr(self, key, item)
 
     def write(self, *args, **kwargs):
         """Write."""

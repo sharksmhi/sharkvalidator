@@ -48,4 +48,4 @@ if __name__ == '__main__':
     # app.validate('phyto_sw', disapproved_only=True)
     # app.validate('phyto_zip', validator_list=['formats'], disapproved_only=True)
 
-    app.write(writer='log')
+    app.write(writer='xlsx')

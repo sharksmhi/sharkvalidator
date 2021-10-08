@@ -1,0 +1,7 @@
+description: Export validation log to excel file
+writer: !!python/name:sharkvalidator.writers.xlsx.ExcelWriter ''
+default_file_name: validation_log.xlsx
+sheet_name: log
+na_rep: ''
+index: null
+encoding: cp1252
