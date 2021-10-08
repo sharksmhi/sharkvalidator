@@ -31,9 +31,9 @@ class ElementValidator(Validator):
 
         for element in element_list:
             if not delivery.__contains__(element):
-                report['disapproved'].setdefault(element, 'Missing!')
+                report['disapproved'].setdefault(element, 'Missing! Corrupt file?')
             elif delivery[element].empty:
-                report['disapproved'].setdefault(element, 'Missing!')
+                report['disapproved'].setdefault(element, 'Missing! or corrupted file?')
             else:
                 if not disapproved_only:
                     report['approved'].setdefault(element, 'All good!')

@@ -35,6 +35,172 @@ data_types:
           - REFSK_SMP
           - SLABO
           - ACKR_SMP
+    bacterioplankton:
+        data:
+          - MYEAR
+          - STATN
+          - PROJ
+          - ORDERER
+          - SHIPC
+          - SDATE
+          - LATIT
+          - LONGI
+          - POSYS
+          - WADEP
+          - MSTAT
+          - SMPDEP
+          - SLABO
+          - ACKR_SMP
+          - SMTYP
+          - SMVOL
+          - SPVOL
+          - CPORT
+          - COEFF
+          - SUBNO
+          - METFP
+          - BABUFLG
+          - BGFLG
+          - ALABO
+          - ACKR_ANA
+          - ANADATE
+          - METDC
+    chlorophyll:
+        data:
+          - MYEAR
+          - STATN
+          - PROJ
+          - ORDERER
+          - SHIPC
+          - SDATE
+          - LATIT
+          - LONGI
+          - POSYS
+          - WADEP
+          - MSTAT
+          - MNDEP
+          - MXDEP
+          - SLABO
+          - ACKR_SMP
+          - SMTYP
+          - SMVOL
+          - CHLA_CONC
+          - QFLAG
+          - UNCERT
+          - METCU
+          - DETLI
+          - LMQNT
+          - RANA
+          - ALABO
+          - ACKR_ANA
+          - ANADATE
+          - METDC
+    epibenthos:
+        data:
+          - MYEAR
+          - STATN
+          - PROJ
+          - ORDERER
+          - SDATE
+          - SLABO
+          - COMNT_VISIT
+          - LATIT
+          - LONGI
+          - POSYS
+          - TRANS_ID
+          - TRANS_MIN
+          - TRANS_MAX
+          - TRANS_LAT_START
+          - TRANS_LONG_START
+          - TRANS_LAT_END
+          - TRANS_LONG_END
+          - TRANS_START_DEP
+          - TRANS_STOP_DEP
+          - SAMPLEID
+          - SECTIONMIN
+          - SECTIONMAX
+          - SECTIONSTA
+          - SECTIONSTO
+          - SMTYP
+#          - SAREA
+          - SUBST
+          - SUBST_COVER
+          - LATNM
+          - SFLAG
+          - TAXNM
+          - COVER%
+          - COVER_CLASS
+          - COUNTNR
+          - ABUND
+          - ALABO
+          - SMTYP
+          - REFSK
+          - METDC
+    greyseal:
+        data:
+          - MYEAR
+          - STATN
+          - PROJ
+          - ORDERER
+#          - SDATE
+          - LATIT
+          - LONGI
+          - POSYS
+          - PURPM
+          - MPROG
+          - SLABO
+          - ACKR_SMP
+          - SMTYP
+          - LATNM
+          - COUNT
+          - ALABO
+          - ACKR_ANA
+          - ANADATE
+          - METDC
+    harbourporpoise:
+        data:
+          - MYEAR
+          - STATN
+          - LATIT
+          - LONGI
+          - PROJ
+          - ORDERER
+#          - SDATE
+          - EDATE
+          - POSYS
+          - SLABO
+          - ACKR_SMP
+          - SMTYP
+          - LATIT
+          - LONGI
+          - METDC
+          - LATNM
+          - DPM
+          - ODATE
+          - OTIME
+          - DEPH
+          - ALABO
+          - ACKR_SMP
+    harbourseal:
+        data:
+          - MYEAR
+          - STATN
+          - PROJ
+          - ORDERER
+#          - SDATE
+          - LATIT
+          - LONGI
+          - POSYS
+          - PURPM
+          - MPROG
+          - SLABO
+          - ACKR_SMP
+          - SMTYP
+          - LATNM
+          - COUNT
+          - ALABO
+          - ACKR_ANA
+          - ANADATE
+          - METDC
     phytoplankton:
         data:
           - MYEAR
@@ -64,6 +230,222 @@ data_types:
           - QFLAG
           - TAXNM
           - METOA
+          - ALABO
+          - ACKR_ANA
+          - ANADATE
+          - METDC
+    picoplankton:
+        data:
+          - MYEAR
+          - STATN
+          - PROJ
+          - ORDERER
+          - SHIPC
+          - SDATE
+          - LATIT
+          - LONGI
+          - POSYS
+          - WADEP
+          - MNDEP
+          - MXDEP
+          - SLABO
+          - ACKR_SMP
+          - SMTYP
+          - SMVOL
+          - LATNM
+          - SFLAG
+          - TRPHY
+          - COUNT
+          - COEFF
+          - SIZCL
+          - SIZRF
+          - SDVOL
+          - QFLAG
+          - TAXNM
+          - METOA
+          - ALABO
+          - ACKR_ANA
+          - ANADATE
+          - METDC
+    primaryproduction:
+        data:
+          - MYEAR
+          - STATN
+          - PROJ
+          - ORDERER
+          - SHIPC
+          - SDATE
+          - LATIT
+          - LONGI
+          - POSYS
+          - WADEP
+          - MNDEP
+          - MXDEP
+          - SLABO
+          - ACKR_SMP
+          - SMTYP
+          - SUBNO
+          - INCUR
+          - DPMA
+          - DPMS
+          - INTIM
+          - PROD
+          - ALABO
+          - ACKR_ANA
+          - METDC
+    ringedseal:
+        data:
+          - MYEAR
+          - PROJ
+          - ORDERER
+#          - SDATE
+          - POSYS
+          - SLABO
+          - ACKR_SMP
+          - SMTYP
+          - TRANS_ID
+          - FNFLA
+          - TRANS_LAT_START
+          - TRANS_LONG_START
+          - TRANS_LAT_STOP
+          - TRANS_LONG_STOP
+          - LATIT
+          - LONGI
+          - TRANSW
+          - LATNM
+          - COUNT
+          - TAXNM
+          - COEFF
+          - ALABO
+          - ACKR_ANA
+          - METDC
+    sealpathology:
+        data:
+          - MYEAR
+          - STATN
+          - FCST
+          - PROJ
+          - ORDERER
+#          - SDATE
+          - SLABO
+          - ACKR_SMP
+          - LATNM
+          - MATRX
+          - SEXCODE
+          - AGE
+          - BODY_LGTH
+          - BODY_WGTH
+          - BLUBB_THICK
+          - AUTOLYSIS_CL
+          - REG_SKIN_CHANGE_CL
+          - CLAW_LESION_CL
+          - CRONIC_CHOLANGIOHEPATITIS
+          - INTEST_ULCER_CL
+          - PNEUMONIA
+          - ARTERIOSCLEROSIS_CL
+          - ADRENO_CORTHYPERPLASIA_CL
+          - UTERUS_PREG
+          - UTERUS_STENOSIS_OCCLUSION
+          - UTERUS_TUMOUR
+          - CAUSE_OF_DEATH
+          - ALABO
+          - ACKR_ANA
+          - ANADATE
+          - METDC
+    sedimentation:
+        data:
+          - MYEAR
+          - STATN
+          - PROJ
+          - ORDERER
+          - SHIPC
+          - SDATE
+          - LATIT
+          - LONGI
+          - POSYS
+          - WADEP
+          - MSTAT
+          - SMDEP
+          - SLABO
+          - ACKR_SMP
+          - SMTYP
+          - SMVOL
+          - MESH
+          - ALABO
+          - ACKR_ANA
+          - ANADATE
+          - METDC
+          - S_COR_FAC
+          - SED_DW
+          - QDW
+          - SED_C%
+          - QC
+          - SED_N%
+          - QN
+          - SED_P%
+          - QP
+    zoobenthos:
+        data:
+          - MYEAR
+          - STATN
+          - PROJ
+          - ORDERER
+          - SHIPC
+          - SDATE
+          - LATIT
+          - LONGI
+          - POSYS
+          - WADEP
+          - MSTAT
+          - SLABO
+          - ACKR_SMP
+          - SMTYP
+          - SMVOL
+          - MESH_LOWER
+          - LATNM
+          - SFLAG
+          - COUNT
+          - WETWT
+          - QFLAG
+          - STAGE
+          - TAXNM
+          - ALABO
+          - ACKR_ANA
+          - ANADATE
+          - METDC
+    zooplankton:
+        data:
+          - MYEAR
+          - STATN
+          - PROJ
+          - ORDERER
+          - SHIPC
+          - SDATE
+          - LATIT
+          - LONGI
+          - POSYS
+          - WADEP
+          - MSTAT
+          - MNDEP
+          - MXDEP
+          - SLABO
+          - ACKR_SMP
+          - SMTYP
+          - SMVOL
+          - SAREA
+          - CLMET
+          - MESHS
+          - NPORT
+          - CPORT
+          - LATNM
+          - SFLAG
+          - COUNT
+          - WETWT
+          - BODY_LGTH
+          - QFLAG
+          - SEXCODE
+          - STAGE
+          - TAXNM
           - ALABO
           - ACKR_ANA
           - ANADATE

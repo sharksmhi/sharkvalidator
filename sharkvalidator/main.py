@@ -26,7 +26,7 @@ class App:
         self.settings = Settings(**kwargs)
         self.deliveries = MultiDeliveries()
 
-    def read(self, file_path, *args, reader=None, delivery_name=None, **kwargs):
+    def read(self, file_path, *args, reader=None, delivery_name=None, data_type=None, **kwargs):
         """Read and append requested data delivery.
 
         Using the given reader (name of reader) to load and initialize
@@ -37,6 +37,7 @@ class App:
             file_path (str): Path to delivery
             reader (str): One of the readers found in self.settings.list_of_readers
             delivery_name (str): Name of delivery
+            data_type (str): Type of data, eg. physicalchemical, phytoplankton, zoobenthos
         """
         if not reader:
             raise ValueError(
@@ -59,8 +60,9 @@ class App:
 
         reader = self.settings.load_reader(reader)
         reader.load(file_path, **kwargs)
+        data_type = data_type or reader.get('data_type')
 
-        dfs = DataFrames(data_type=reader.get('data_type'), name=delivery_name)
+        dfs = DataFrames(data_type=data_type, name=delivery_name)
         for element, item in reader.elements.items():
             df = reader.read_element(item.pop('element_specifier'), **item)
             dfs.append_new_frame(name=element, data=df)

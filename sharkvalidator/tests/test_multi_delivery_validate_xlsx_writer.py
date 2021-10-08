@@ -13,13 +13,13 @@ from sharkvalidator.validators.validator import ValidatorLog
 
 if __name__ == '__main__':
 
-    # path_to_zips = r'...\sharkweb\SHARKdata_datasets'
-    path_to_zips = r'\\WINFS\prod\shark_bio\speglas till data_smhi_se-oce\SHARK\data_deliveries'
+    path_to_zips = r'..\sharkweb\SHARKdata_datasets'
+    # path_to_zips = r'..speglas till data_smhi_se-oce\SHARK\data_deliveries'
     app = App()
 
     dtypes = (
         # 'Bacterioplankton',
-        'Chlorophyll',
+        # 'Chlorophyll',
         # 'Epibenthos',
         # 'HarbourSeal',
         # 'GreySeal',
@@ -27,7 +27,7 @@ if __name__ == '__main__':
         # 'PhysicalChemical',
         # 'Profile',
         # 'Phytoplankton',
-        # 'Picoplankton',
+        'Picoplankton',
         # 'PlanktonBarcoding',
         # 'PrimaryProduction',
         # 'RingedSeal',
@@ -48,6 +48,7 @@ if __name__ == '__main__':
                 zip_id,
                 reader='sharkzip',
                 delivery_name=zip_id.name,
+                data_type=dtype.lower()
             )
 
             app.validate(

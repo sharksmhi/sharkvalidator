@@ -265,6 +265,10 @@ parameters:
         upper_range: 100
     Q_CPHL:
         format_validator: code
+    CHLA_CONC:
+        format_validator: range
+        lower_range: 0
+        upper_range: 100
     DOC:
         format_validator: range
         lower_range: 0
