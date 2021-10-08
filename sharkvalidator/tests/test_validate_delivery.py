@@ -25,7 +25,7 @@ if __name__ == '__main__':
     # )
 
     app.read(
-        r'C:\Temp\DV\validator_test\Format Physical and chemical 2020.xlsx',
+        r'C:\Temp\DV\validator_test\Format Physical and chemical_Hallands KVK_kvartal3_2021.xlsx',
         reader='phyche_xlsx',
         delivery_name='phyche_delivery',
     )
