@@ -14,6 +14,8 @@ from sharkvalidator.utils import TranslateHeader, TranslateParameters
 class Frame(pd.DataFrame, ABC):
     """Stores data from one, and only one, element (usually an excel sheet or a txt file)."""
 
+    additional_mapping = {'LATIT_DM': 'LATIT', 'LONGI_DM': 'LONGI'}
+
     @property
     def _constructor(self):
         """Construct Frame.
@@ -29,6 +31,7 @@ class Frame(pd.DataFrame, ABC):
     def translation(self):
         """Translate columns of self."""
         self.rename(columns=TranslateHeader.data, inplace=True)
+        self.rename(columns=self.additional_mapping, inplace=True)
         if 'PARAM' in self.columns:
             self['PARAM'] = self['PARAM'].apply(lambda x: TranslateParameters.map_get(x))
 
