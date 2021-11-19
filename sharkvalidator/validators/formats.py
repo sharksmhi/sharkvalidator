@@ -117,7 +117,7 @@ class FormatValidator(Validator):
                 if parameter in df:
                     if type(df[parameter]) == Frame:
                         # TODO should probably move this to a seperate validator.
-                        #  Not quite sur about when/why this condition becomes true.
+                        #  Not quite sure about when/why this condition becomes true.
                         #  Concerning duplicate parameters (?).
                         duplicate_text = duplicate_result()
                         report_key = ' - '.join((element, parameter))
@@ -256,9 +256,13 @@ class FreeTextValidator(Validator):
         }
         boolean = serie.ne('')
         if boolean.any():
-            # TODO Anything?... at all?..no?.. allrighty then!
-            #  So, this check can never fail? why the fuss then?
             result['validation'] = True
+            semicolon_boolean = serie[boolean].str.contains(';')
+            if semicolon_boolean.any():
+                result['approved'] = False
+                unvalid_values = ', '.join(serie[boolean][semicolon_boolean].unique())
+                result['text'] = 'ValueError! semicolon is not ok! ' \
+                                 'Look up the following texts: {}'.format(unvalid_values)
         return result
 
 
