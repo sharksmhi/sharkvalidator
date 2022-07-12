@@ -9,7 +9,7 @@ Created on 2021-10-27 08:59
 from pathlib import Path
 from sharkvalidator import App
 from sharkvalidator.utils import generate_filepaths
-from sharkvalidator.validators.validator import ValidatorLog
+from sharkvalidator.validators.validator import ValidatorLog  # noqa: F401
 
 
 if __name__ == '__main__':
@@ -32,18 +32,20 @@ if __name__ == '__main__':
         print(f'Datatype: {dtype}')
         generator = generate_filepaths(path_to_zips, pattern=f'SHARK_{dtype}')
         for fid in generator:
-            if not '1928_BAS_XXX' in fid:
+            if '1928_BAS_XXX' not in fid:
                 continue
             fid = Path(fid)
             app.read(
                 fid,
                 reader='sharkzip',
-                delivery_name=zip_id.name,
+                delivery_name=fid.name,
             )
 
-            app.validate(fid.name, validator_list=['formats_TIME'], disapproved_only=True)
+            app.validate(fid.name,
+                         validator_list=['formats_TIME'],
+                         disapproved_only=True)
 
-            app.deliveries.drop_delivery(name=zip_id.name)
+            app.deliveries.drop_delivery(name=fid.name)
 
         # app.write(
         #     writer='log',

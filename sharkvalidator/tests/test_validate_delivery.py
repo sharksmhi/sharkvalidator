@@ -31,7 +31,7 @@ if __name__ == '__main__':
     #     delivery_name='phyche_delivery',
     # )
 
-    # wd = r'..\FysKem\NATIONELLA_Data\2021\BAS_EXT_SYK_SMHI\helår'
+    wd = r'..\FysKem\NATIONELLA_Data\2021\BAS_EXT_SYK_SMHI\helår'
     for direc in os.listdir(wd):
         app.read(
             '/'.join((wd, direc)),
