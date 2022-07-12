@@ -66,8 +66,10 @@ class SharkwebReader(BaseSHARK):
         """Return activated folder with data."""
         folder_path = Path(args[0]) if type(args) == tuple else Path(args)
         if not folder_path.exists:
-            raise FileNotFoundError('Could not find the given LIMS-directory: {}'
-                                    .format(folder_path))
+            raise FileNotFoundError(
+                'Could not find the given LIMS-directory: {}'.format(
+                    folder_path)
+            )
         self.file = folder_path
 
 
@@ -92,8 +94,12 @@ class SharkzipReader(BaseSHARK):
                 df = self.eliminate_empty_rows(df)
             except Exception:
                 df = None
-                print('Activated zipfile contains unreadable file: {} from package: {}'
-                      .format(fid, Path(self.file.filename).name))
+                print(
+                    'Activated zipfile contains unreadable file: {} '
+                    'from package: {}'.format(
+                        fid, Path(self.file.filename).name
+                    )
+                )
         else:
             df = None
             print('Activated zipfile does not contain file: {}'.format(fid))
@@ -103,10 +109,13 @@ class SharkzipReader(BaseSHARK):
         """Return activated zip file."""
         zip_path = Path(args[0]) if type(args) == tuple else Path(args)
         if not zip_path.exists:
-            raise FileNotFoundError('Could not find the given ZIP-directory: {}'.format(zip_path))
+            raise FileNotFoundError(
+                'Could not find the given ZIP-directory: {}'.format(zip_path))
         if not zip_path.name.startswith(self.files_startswith):
-            raise ValueError('The given ZIP-directory does not follow the correct format ({}): {}'
-                             .format(self.files_startswith, zip_path))
+            raise ValueError(
+                'The given ZIP-directory does not follow the correct format '
+                '({}): {}'.format(self.files_startswith, zip_path)
+            )
         try:
             self.file = zipfile.ZipFile(zip_path)
         except zipfile.BadZipfile:

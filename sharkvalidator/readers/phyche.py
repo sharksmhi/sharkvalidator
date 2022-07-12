@@ -23,6 +23,7 @@ class PhysicalChemicalLIMSReader(PandasTxtReader):
 
     def __init__(self, *args, **kwargs):
         """Initialize."""
+        self.data_columns = []
         super().__init__(*args, **kwargs)
         self.arguments = list(args)
         self.files = {}
@@ -67,7 +68,8 @@ class PhysicalChemicalLIMSReader(PandasTxtReader):
                 for qf in qflags:
                     boolean = df[key].str.contains(qf, regex=False)
                     if boolean.any():
-                        df.loc[boolean, key] = df.loc[boolean, key].str.replace(qf, '')
+                        df.loc[boolean, key] = df.loc[
+                            boolean, key].str.replace(qf, '')
                         df.loc[boolean, 'Q_' + key] = qf
         return df
 
@@ -75,7 +77,11 @@ class PhysicalChemicalLIMSReader(PandasTxtReader):
         """Set folder paths to self.files."""
         folder_path = Path(args[0]) if type(args) == tuple else Path(args)
         if not folder_path.exists:
-            raise FileNotFoundError('Could not find the given LIMS-directory: {}'.format(folder_path))
+            raise FileNotFoundError(
+                'Could not find the given LIMS-directory: {}'.format(
+                    folder_path
+                )
+            )
         if folder_path.name != 'Raw_data':
             folder_path = folder_path / 'Raw_data'
 

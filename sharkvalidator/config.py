@@ -57,8 +57,8 @@ class Settings:
         if not os.path.exists(file_path):
             print('Could not find codelist. Trying to download it instead..')
             r = requests.get(
-                'http://smhi.se/oceanografi/oce_info_data/shark_web/downloads/codelist_SMHI.xlsx',
-                allow_redirects=True,
+                'http://smhi.se/oceanografi/oce_info_data/shark_web/downloads/'
+                'codelist_SMHI.xlsx', allow_redirects=True,
             )
             open(file_path, 'wb').write(r.content)
             print('Download completed! file saved here: {}'.format(file_path))
@@ -98,10 +98,12 @@ class Settings:
         """Return list of validators names."""
         return list(self.validators)
 
-    def get_export_file_path(self, file_path=None, file_name=None, default_file_name=None, **kwargs):
+    def get_export_file_path(self, file_path=None, file_name=None,
+                             default_file_name=None, **kwargs):
         """Return path to export filename.
 
-        Whenever there´s not an export path given by the user, we try to export elsewhere.
+        Whenever there´s not an export path given by the user,
+        we try to export elsewhere.
         """
         if file_path:
             if os.path.isdir(file_path):
@@ -128,13 +130,18 @@ class Settings:
         Special management of readers and writers.
         """
         if os.path.isfile(name):
-            if isinstance(value, dict) and ('readers' in name or 'writers' in name or 'validators' in name):
+            if isinstance(value, dict) and (
+                'readers' in name or 'writers' in name or 'validators' in name
+            ):
                 if 'readers' in name:
-                    recursive_dict_update(self.readers, {Path(name).stem: value})
+                    recursive_dict_update(self.readers,
+                                          {Path(name).stem: value})
                 elif 'writers' in name:
-                    recursive_dict_update(self.writers, {Path(name).stem: value})
+                    recursive_dict_update(self.writers,
+                                          {Path(name).stem: value})
                 else:
-                    recursive_dict_update(self.validators, {Path(name).stem: value})
+                    recursive_dict_update(self.validators,
+                                          {Path(name).stem: value})
             else:
                 super().__setattr__(Path(name).stem, value)
         elif name == 'attributes':

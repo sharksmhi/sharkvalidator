@@ -20,8 +20,9 @@ class ValidationWriter(WriterBase):
 
         Args:
             file_path (str): Path to file
-            exclude_approved_formats (bool): False | True. If True only disapproved tests will
-                                                           be included in the file.
+            exclude_approved_formats (bool): False | True.
+                                             If True only disapproved tests will
+                                             be included in the file.
         """
         log_copy = copy.deepcopy(ValidatorLog.log)
         if exclude_approved_formats:

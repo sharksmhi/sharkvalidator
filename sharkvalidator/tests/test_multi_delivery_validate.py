@@ -41,7 +41,8 @@ if __name__ == '__main__':
                 delivery_name=zip_id.name,
             )
 
-            app.validate(zip_id.name, validator_list=['formats_freetext'], disapproved_only=True)
+            app.validate(zip_id.name, validator_list=['formats_freetext'],
+                         disapproved_only=True)
 
             df = app.deliveries[zip_id.name]['data']
             if not (df == df.replace({';': ','}, regex=True)).all().all():

@@ -41,7 +41,10 @@ def floatable(x):
 
 
 def decmin_to_decdeg(pos, string_type=True, decimals=4):
-    """Convert position from decimal degrees into degrees and decimal minutes."""
+    """Convert position.
+
+    From degrees and decimal minutes to decimal degrees.
+    """
     pos = float(pos)
 
     output = np.floor(pos / 100.) + (pos % 100) / 60.
@@ -52,14 +55,19 @@ def decmin_to_decdeg(pos, string_type=True, decimals=4):
         return float(output)
 
 
-def decdeg_to_decmin(pos: (str, float), string_type=True, decimals=2) -> (str, float):
-    """Convert position from degrees and decimal minutes into decimal degrees."""
+def decdeg_to_decmin(pos: (str, float), string_type=True, decimals=2) \
+        -> (str, float):
+    """Convert position.
+
+    From decimal degrees into degrees and decimal minutes.
+    """
     pos = float(pos)
     deg = np.floor(pos)
     minute = pos % deg * 60.0
     if string_type:
         if decimals:
-            output = ('%%2.%sf'.zfill(7) % decimals % (float(deg) * 100.0 + minute))
+            output = ('%%2.%sf'.zfill(7) % decimals %
+                      (float(deg) * 100.0 + minute))
         else:
             output = (str(deg * 100.0 + minute))
 
@@ -103,10 +111,12 @@ def recursive_dict_update(d: dict, u: dict) -> dict:
 
 def round_value(value: (str, int, float), nr_decimals=2) -> str:
     """Calculate rounded value."""
-    return str(Decimal(str(value)).quantize(Decimal('%%1.%sf' % nr_decimals % 1), rounding=ROUND_HALF_UP))
+    return str(Decimal(str(value)).quantize(
+        Decimal('%%1.%sf' % nr_decimals % 1), rounding=ROUND_HALF_UP))
 
 
-def transform_ref_system(lat=0.0, lon=0.0, in_proj='EPSG:3006', out_proj='EPSG:4326'):
+def transform_ref_system(lat=0.0, lon=0.0, in_proj='EPSG:3006',
+                         out_proj='EPSG:4326'):
     """Transform coordinates from one spatial reference system to another.
 
     To find your EPSG check this website: http://spatialreference.org/ref/epsg/
@@ -143,7 +153,8 @@ def delete_key_from_dict(dictionary, key):
 class CodeDict(dict):
     """Class to map codes.
 
-    Mapping internal code against sets of codes with swedish/english/short names.
+    Mapping internal code against sets of codes with
+    swedish/english/short names.
 
     SMHI specific standards.
     """
@@ -241,8 +252,10 @@ class TranslateParameters:
         )
         for row in df.itertuples():
             if row.short_param_name:
-                self.data.setdefault_values(row.english_param_name, row.short_param_name)
-                self.data.setdefault_values(row.swedish_param_name, row.short_param_name)
+                self.data.setdefault_values(row.english_param_name,
+                                            row.short_param_name)
+                self.data.setdefault_values(row.swedish_param_name,
+                                            row.short_param_name)
 
     @classmethod
     def map_get(cls, key):
