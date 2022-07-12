@@ -20,13 +20,13 @@ if __name__ == '__main__':
     # )
 
     # app.read(
-    #     r'..validator_test\sharkdata\pp\SHARK_Phytoplankton_2019_SMHI_version_2020-10-27.zip',
+    #     r'..\SHARK_Phytoplankton_2019_SMHI_version_2020-10-27.zip',
     #     reader='phytop_sharkzip',
     #     delivery_name='phyto_zip',
     # )
 
     # app.read(
-    #     r'..\FysKem\NATIONELLA_Data\2022\IBTS\arbetsmapp\dataexporter\2022-04-13 0742-2022-LANDSKOD 77-FARTYGSKOD 10',
+    #     r'..\2022-04-13 0742-2022-LANDSKOD 77-FARTYGSKOD 10',
     #     reader='phyche_lims',
     #     delivery_name='phyche_delivery',
     # )
@@ -50,6 +50,8 @@ if __name__ == '__main__':
     # app.validate('phyche_delivery', disapproved_only=True)
     app.validate(*os.listdir(wd), disapproved_only=True)
     # app.validate('phyto_sw', disapproved_only=True)
-    # app.validate('phyto_zip', validator_list=['formats'], disapproved_only=True)
+    # app.validate('phyto_zip',
+    #              validator_list=['formats'],
+    #              disapproved_only=True)
 
     app.write(writer='xlsx')

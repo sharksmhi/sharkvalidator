@@ -12,7 +12,10 @@ from sharkvalidator.utils import TranslateHeader, TranslateParameters
 
 
 class Frame(pd.DataFrame, ABC):
-    """Stores data from one, and only one, element (usually an excel sheet or a txt file)."""
+    """Stores data from one, and only one, element.
+
+    An element is usually an excel sheet or a txt file.
+    """
 
     additional_mapping = {'LATIT_DM': 'LATIT', 'LONGI_DM': 'LONGI'}
 
@@ -33,7 +36,8 @@ class Frame(pd.DataFrame, ABC):
         self.rename(columns=TranslateHeader.data, inplace=True)
         self.rename(columns=self.additional_mapping, inplace=True)
         if 'PARAM' in self.columns:
-            self['PARAM'] = self['PARAM'].apply(lambda x: TranslateParameters.map_get(x))
+            self['PARAM'] = self['PARAM'].apply(
+                lambda x: TranslateParameters.map_get(x))
 
     @property
     def data_columns(self):

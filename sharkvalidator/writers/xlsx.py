@@ -20,8 +20,9 @@ class ExcelWriter(WriterBase):
 
         Args:
             file_path (str): Path to file
-            exclude_approved_formats (bool): False | True. If True only disapproved tests will
-                                                           be included in the file.
+            exclude_approved_formats (bool): False | True.
+                                             If True only disapproved tests will
+                                             be included in the file.
         """
         log_copy = copy.deepcopy(ValidatorLog.log)
         if exclude_approved_formats:
@@ -42,7 +43,8 @@ class ExcelWriter(WriterBase):
             **kwargs
         )
 
-    def get_writer_format(self, data):
+    @staticmethod
+    def get_writer_format(data):
         """Return ValidatorLog.log in format likeable to this writer."""
         out_dict = {
             'delivery': [],
@@ -53,8 +55,8 @@ class ExcelWriter(WriterBase):
         }
         for delivery, item in data.items():
             if 'elements' in item:
-                for key_element, item_element in item['elements'].items():
-                    if any(item_element) and key_element == 'disapproved':
+                for element, item_element in item['elements'].items():
+                    if any(item_element) and element == 'disapproved':
                         for key_type, item_type in item_element.items():
                             out_dict['delivery'].append(delivery)
                             out_dict['validator'].append('elements')
@@ -62,13 +64,13 @@ class ExcelWriter(WriterBase):
                             out_dict['field'].append('')
                             out_dict['comnt'].append(item_type)
 
-            for validator_key in ('essentials', 'formats'):
-                if validator_key in item:
-                    for key_element, item_element in item[validator_key].items():
-                        if any(item_element) and key_element == 'disapproved':
+            for validator in ('essentials', 'formats'):
+                if validator in item:
+                    for element, item_element in item[validator].items():
+                        if any(item_element) and element == 'disapproved':
                             for key_type, item_type in item_element.items():
                                 out_dict['delivery'].append(delivery)
-                                out_dict['validator'].append(validator_key)
+                                out_dict['validator'].append(validator)
                                 typ, field = key_type.split(' - ')
                                 out_dict['type'].append(typ)
                                 out_dict['field'].append(field)
