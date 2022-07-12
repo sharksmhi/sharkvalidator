@@ -6,36 +6,6 @@ Created on 2020-12-16 13:52
 @author: johannes
 
 See /etc/validators/formats.yaml
-
-format_validators:
-    code:
-        validator: !!python/name:sharkvalidator.validators.formats.CodeValidator ''
-        path_to_codelist: "etc/codelist_SMHI.xlsx"
-    datetime:
-        validator: !!python/name:sharkvalidator.validators.formats.DateTimeValidator ''
-    free_text:
-        validator: !!python/name:sharkvalidator.validators.formats.FreeTextValidator ''
-    position:
-        validator: !!python/name:sharkvalidator.validators.formats.PositionValidator ''
-    range:
-        validator: !!python/name:sharkvalidator.validators.formats.RangeValidator ''
-
-parameters:
-    PROJ:
-        format_validator: code
-    SDATE:
-        format_validator: datetime
-        fmt: '%Y-%m-%d'
-    STATN:
-        format_validator: free_text
-    LATIT:
-        format_validator: position
-        lower_range: 5350
-        upper_range: 6600
-    TEMP_CTD:
-        format_validator: range
-        lower_range: -2.5
-        upper_range: 30
 """
 import os
 import pandas as pd
@@ -57,7 +27,8 @@ class FormatValidator(Validator):
     """Node class for format validators.
 
     In order for these format validators to pass we need values for all
-    parameters of the delivery to pass the given validator for the specific parameter.
+    parameters of the delivery to pass the given validator for the
+    specific parameter.
 
     Example: A physical and chemical delivery may include values for
     numerous fields, some of them are:
@@ -92,7 +63,7 @@ class FormatValidator(Validator):
         else:
             report = {'approved': {}, 'disapproved': {}}
 
-        # Initiate format validators (eg. CodeValidator, DateTimeValidator, etc).
+        # Initiate format validators (eg. CodeValidator, etc).
         for key, item in self.format_validators.items():
             if isinstance(item, dict):
                 validator = item.get('validator')
@@ -100,7 +71,8 @@ class FormatValidator(Validator):
                     **{k: i for k, i in item.items() if k != 'validator'}
                 )
 
-        # Each parameter is connected to a certain validator called "format_validator".
+        # Each parameter is connected to a certain validator
+        # called "format_validator".
         for parameter, item in self.parameters.items():
             validator = self.format_validators.get(item.get('format_validator'))
             if validator:
@@ -116,12 +88,14 @@ class FormatValidator(Validator):
             for element, df in delivery.items():
                 if parameter in df:
                     if type(df[parameter]) == Frame:
-                        # TODO should probably move this to a seperate validator.
-                        #  Not quite sure about when/why this condition becomes true.
+                        # TODO should probably move this to a seperate
+                        #  validator. Not quite sure about when/why this
+                        #  condition becomes true.
                         #  Concerning duplicate parameters (?).
                         duplicate_text = duplicate_result()
                         report_key = ' - '.join((element, parameter))
-                        report['disapproved'].setdefault(report_key, duplicate_text)
+                        report['disapproved'].setdefault(
+                            report_key, duplicate_text)
                         continue
 
                     # Validate field.
@@ -154,6 +128,7 @@ class CodeValidator(Validator):
 
     def __init__(self, *args, **kwargs):
         """Initialize and set attributes from kwargs."""
+        self.path_to_codelist = ''
         super().__init__(*args, **kwargs)
 
         # TODO we probably want an API solution here..
@@ -174,8 +149,10 @@ class CodeValidator(Validator):
                         'POSYS', 'PURPM', 'REFSK', 'RLIST', 'SEXCODE',
                         'SFLAG', 'SIZRF', 'SMTYP', 'SPLIT', 'STAGE', 'STRID',
                         'SUBST', 'TALGAE', 'TRPHY', 'WLTYP']:
-                set_with_values |= set(cl.loc[boolean, 'Beskrivning/Svensk översättning'].values)
-                set_with_values |= set(cl.loc[boolean, 'Description/English translate'].values)
+                set_with_values |= set(
+                    cl.loc[boolean, 'Beskrivning/Svensk översättning'].values)
+                set_with_values |= set(
+                    cl.loc[boolean, 'Description/English translate'].values)
 
             self.code_list.setdefault_values(attr, set_with_values)
 
@@ -202,20 +179,23 @@ class CodeValidator(Validator):
                 codes = set()
                 for value in self.unique_values(serie[boolean].unique()):
                     codes |= set(v.strip() for v in value.split(','))
-                code_boolean = [True if c in valid_codes else False for c in codes]
+                code_boolean = [
+                    True if c in valid_codes else False for c in codes]
                 if not all(code_boolean):
                     result['approved'] = False
                     unvalid_values = ', '.join(
                         (c for c, bol in zip(codes, code_boolean) if not bol)
                     )
-                    result['text'] = 'Codes are inconsistent with standard code format of {}. ' \
-                                     'Look up the following values: {}'.format(
+                    result['text'] = 'Codes are inconsistent with standard ' \
+                                     'code format of {}. Look up the ' \
+                                     'following values: {}'.format(
                         self.code_list.mapper.get(serie.name, serie.name),
                         unvalid_values
                     )
             except ValueError:
                 result['approved'] = False
-                result['text'] = 'ValueError! string instead of interger or float values?'
+                result['text'] = 'ValueError! string instead of ' \
+                                 'interger or float values?'
         return result
 
 
@@ -233,14 +213,16 @@ class DateTimeValidator(Validator):
         if boolean.any():
             result['validation'] = True
             try:
-                boolean = pd.to_datetime(serie[boolean], format=self.fmt, errors='coerce').notna()
+                boolean = pd.to_datetime(
+                    serie[boolean], format=self.fmt, errors='coerce').notna()
                 if not boolean.all():
                     result['approved'] = False
-                    result['text'] = 'Values are inconsistent with standard format ({})'\
-                        .format(self.fmt)
+                    result['text'] = 'Values are inconsistent with standard ' \
+                                     'format ({})'.format(self.fmt)
             except ValueError:
                 result['approved'] = False
-                result['text'] = 'ValueError! string instead of interger or float values?'
+                result['text'] = 'ValueError! string instead of interger ' \
+                                 'or float values?'
         return result
 
 
@@ -260,9 +242,11 @@ class FreeTextValidator(Validator):
             semicolon_boolean = serie[boolean].str.contains(';')
             if semicolon_boolean.any():
                 result['approved'] = False
-                unvalid_values = ', '.join(serie[boolean][semicolon_boolean].unique())
+                unvalid_values = ', '.join(
+                    serie[boolean][semicolon_boolean].unique())
                 result['text'] = 'ValueError! semicolon is not ok! ' \
-                                 'Look up the following texts: {}'.format(unvalid_values)
+                                 'Look up the following texts: {}' \
+                                 ''.format(unvalid_values)
         return result
 
 
@@ -291,8 +275,9 @@ class PositionValidator(Validator):
                         .format(self.lower_range, self.upper_range)
             except ValueError:
                 result['approved'] = False
-                result['text'] = 'ValueError! string instead of interger or float values? ' \
-                                 'or maybe decimal sign: comma instead of dot?'
+                result['text'] = 'ValueError! string instead of interger or ' \
+                                 'float values? or maybe decimal sign: comma ' \
+                                 'instead of dot?'
         return result
 
 
@@ -320,8 +305,10 @@ class RangeValidator(Validator):
             except ValueError:
                 result['approved'] = False
                 float_boolean = serie[boolean].apply(lambda x: floatable(x))
-                unvalid_values = ', '.join(serie[boolean][~float_boolean].unique())
-                result['text'] = 'ValueError! string instead of interger or float values? ' \
-                                 'or maybe decimal sign: comma instead of dot? ' \
-                                 'Look up the following values: {}'.format(unvalid_values)
+                unvalid_values = ', '.join(
+                    serie[boolean][~float_boolean].unique())
+                result['text'] = 'ValueError! string instead of interger or ' \
+                                 'float values? or maybe decimal sign: comma ' \
+                                 'instead of dot? Look up the following ' \
+                                 'values: {}'.format(unvalid_values)
         return result

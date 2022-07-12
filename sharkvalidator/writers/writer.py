@@ -13,6 +13,10 @@ class WriterBase(ABC):
 
     def __init__(self, *args, **kwargs):
         """Initialize."""
+        self.sheet_name = None
+        self.na_rep = None
+        self.index = None
+        self.encoding = None
         for key, item in kwargs.items():
             setattr(self, key, item)
 

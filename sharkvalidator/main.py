@@ -26,7 +26,8 @@ class App:
         self.settings = Settings(**kwargs)
         self.deliveries = MultiDeliveries()
 
-    def read(self, file_path, *args, reader=None, delivery_name=None, data_type=None, **kwargs):
+    def read(self, file_path, *args, reader=None, delivery_name=None,
+             data_type=None, **kwargs):
         """Read and append requested data delivery.
 
         Using the given reader (name of reader) to load and initialize
@@ -35,27 +36,32 @@ class App:
 
         Args:
             file_path (str): Path to delivery
-            reader (str): One of the readers found in self.settings.list_of_readers
+            reader (str): One of the readers found in
+                          self.settings.list_of_readers
             delivery_name (str): Name of delivery
-            data_type (str): Type of data, eg. physicalchemical, phytoplankton, zoobenthos
+            data_type (str): Type of data, eg. physicalchemical,
+                             phytoplankton, zoobenthos
         """
         if not reader:
             raise ValueError(
-                'Missing reader! Please give one as input (App.read(reader=NAME_OF_READER)'
+                'Missing reader! Please give one as input '
+                '(App.read(reader=NAME_OF_READER)'
             )
         if reader not in self.settings.list_of_readers:
             raise ValueError(
-                'Given reader does not exist as a valid option! (valid options: {}'
-                ''.format(', '.join(self.settings.list_of_readers))
+                'Given reader does not exist as a valid option! '
+                '(valid options: {}'.format(', '.join(
+                    self.settings.list_of_readers))
             )
         if not file_path:
             raise ValueError(
-                'Missing file path! Please give one as input (App.read(PATH_TO_DATA_SOURCE)'
+                'Missing file path! Please give one as input '
+                '(App.read(PATH_TO_DATA_SOURCE)'
             )
         if not delivery_name:
             raise ValueError(
-                'Missing delivery name! '
-                'Please give one as input (App.read(delivery_name=NAME_OF_DELIVERY)'
+                'Missing delivery name! Please give one as input '
+                '(App.read(delivery_name=NAME_OF_DELIVERY)'
             )
 
         reader = self.settings.load_reader(reader)
@@ -69,26 +75,29 @@ class App:
 
         self.deliveries.append_new_delivery(name=delivery_name, data=dfs)
 
-    def validate(self, *args, validator_list=None, disapproved_only=False, **kwargs):
+    def validate(self, *args, validator_list=None,
+                 disapproved_only=False, **kwargs):
         """Validate x number of deliveries using y number of validators.
 
         Validation results are stored in validators.validator.ValidatorLog
 
         Args:
             *args (tuple): Contains delivery names.
-            validator_list (list): One or more validators to use in order to validate
-                                   data delivery/deliveries. Available validators can be
-                                   found in self.settings.list_of_validators.If no
-                                   validator_list is given we use all available validators
-                                   in self.settings.list_of_validators
+            validator_list (list): One or more validators to use in order to
+                                   validate data delivery/deliveries.
+                                   Available validators can be found in
+                                   self.settings.list_of_validators.If no
+                                   validator_list is given we use all available
+                                   validators in
+                                   self.settings.list_of_validators
             disapproved_only (bool): If set to True the ValidatorLog will only
                                      include disapproved validation information.
             **kwargs (dict): kwargs to pass on to validator.
         """
         if not args:
             raise ValueError(
-                'Missing delivery names! '
-                'Please give minimum one as input (App.validate(DELIVERY_NAME(S))'
+                'Missing delivery names! Please give minimum one as input '
+                '(App.validate(DELIVERY_NAME(S))'
             )
 
         validator_list = validator_list or self.settings.validators_sorted
@@ -96,8 +105,9 @@ class App:
         for v in validator_list:
             if v not in self.settings.list_of_validators:
                 raise ValueError(
-                    'The given validator ({}) does not exist as a valid option! '
-                    '(valid options: {}'.format(v, ', '.join(self.settings.list_of_writers))
+                    'The given validator ({}) does not exist as a valid option!'
+                    ' (valid options: {}'.format(v, ', '.join(
+                        self.settings.list_of_writers))
                 )
 
         for validator_name in validator_list:
@@ -118,17 +128,20 @@ class App:
         Args:
             *args:
             writer (str): Using the given writer to write log to file.
-                          Available writers can be found in self.settings.list_of_writers
+                          Available writers can be found in
+                          self.settings.list_of_writers
             **kwargs (dict): kwargs to pass on to validator.
         """
         if not writer:
             raise ValueError(
-                'Missing writer! Please give one as input (App.write(writer=NAME_OF_WRITER)'
+                'Missing writer! Please give one as input '
+                '(App.write(writer=NAME_OF_WRITER)'
             )
         if writer not in self.settings.list_of_writers:
             raise ValueError(
-                'The given writer does not exist as a valid option! (valid options: {}'
-                ''.format(', '.join(self.settings.list_of_writers))
+                'The given writer does not exist as a valid option! '
+                '(valid options: {}'.format(', '.join(
+                    self.settings.list_of_writers))
             )
 
         writer = self.settings.load_writer(writer)

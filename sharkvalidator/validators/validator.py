@@ -19,6 +19,8 @@ class Validator(ABC):
         self.data_types = None
         self.format_validators = None
         self.parameters = None
+        self.lower_range = None
+        self.upper_range = None
 
         for key, item in kwargs.items():
             setattr(self, key, item)
@@ -41,7 +43,8 @@ class Validator(ABC):
 class ValidatorLog:
     """Logger for validators.
 
-    Each validator categorizes validation in "approved" and "disapproved" validation.
+    Each validator categorizes validation in
+    "approved" and "disapproved" validation.
 
     log: {
         'delivery_name':

@@ -34,7 +34,8 @@ class EssentialValidator(Validator):
             report = {'approved': {}, 'disapproved': {}}
 
         for element, item in delivery.items():
-            parameter_list = deep_get(self.data_types, [delivery.data_type, element]) or []
+            parameter_list = deep_get(self.data_types,
+                                      [delivery.data_type, element]) or []
 
             for parameter in parameter_list:
                 report_key = ' - '.join((element, parameter))
@@ -42,11 +43,14 @@ class EssentialValidator(Validator):
                     if item[parameter].ne('').all():
                         # not equal to ''
                         if not disapproved_only:
-                            report['approved'].setdefault(report_key, 'No missing values')
+                            report['approved'].setdefault(
+                                report_key, 'No missing values')
                     else:
-                        report['disapproved'].setdefault(report_key, 'Missing values')
+                        report['disapproved'].setdefault(
+                            report_key, 'Missing values')
                 else:
-                    report['disapproved'].setdefault(report_key, 'Missing this parameter/column')
+                    report['disapproved'].setdefault(
+                        report_key, 'Missing this parameter/column')
 
         ValidatorLog.update_info(
             delivery_name=delivery.name,

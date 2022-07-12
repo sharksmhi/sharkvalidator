@@ -25,15 +25,19 @@ class ElementValidator(Validator):
 
     def validate(self, delivery, disapproved_only=None, **kwargs):
         """Validate to see if delivery contains all mandatory "elements"."""
-        report = {'disapproved': {}} if disapproved_only else {'approved': {}, 'disapproved': {}}
+        report = {'disapproved': {}} if disapproved_only else \
+            {'approved': {}, 'disapproved': {}}
 
-        element_list = deep_get(self.data_types, [delivery.data_type, 'element_list']) or []
+        element_list = deep_get(self.data_types,
+                                [delivery.data_type, 'element_list']) or []
 
         for element in element_list:
             if not delivery.__contains__(element):
-                report['disapproved'].setdefault(element, 'Missing! Corrupt file?')
+                report['disapproved'].setdefault(element,
+                                                 'Missing! Corrupt file?')
             elif delivery[element].empty:
-                report['disapproved'].setdefault(element, 'Missing! or corrupted file?')
+                report['disapproved'].setdefault(element,
+                                                 'Missing! or corrupted file?')
             else:
                 if not disapproved_only:
                     report['approved'].setdefault(element, 'All good!')
