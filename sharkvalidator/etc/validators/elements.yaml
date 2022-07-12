@@ -8,7 +8,47 @@ data_types:
           - data
           - analyse_info
           - sampling_info
-    phytoplankton:
+    bacterioplankton:
+        element_list:
+          - delivery_note
+          - data
+    chlorophyll:
+        element_list:
+          - delivery_note
+          - data
+    epibenthos:
+        element_list:
+          - delivery_note
+          - data
+    greyseal:
+        element_list:
+          - delivery_note
+          - data
+    harbourseal:
+        element_list:
+          - delivery_note
+          - data
+    ringedseal:
+        element_list:
+          - delivery_note
+          - data
+    sealpathology:
+        element_list:
+          - delivery_note
+          - data
+    sedimentation:
+        element_list:
+          - delivery_note
+          - data
+    zoobenthos:
+        element_list:
+          - delivery_note
+          - data
+    zooplankton:
+        element_list:
+          - delivery_note
+          - data
+    harbourporpoise:
         element_list:
           - delivery_note
           - data

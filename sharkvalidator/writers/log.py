@@ -6,18 +6,13 @@ Created on 2021-01-08 13:37
 @author: johannes
 """
 import yaml
+import copy
 from sharkvalidator.writers.writer import WriterBase
 from sharkvalidator.validators.validator import ValidatorLog
 
 
 class ValidationWriter(WriterBase):
     """Validation Log writer."""
-
-    def __init__(self, *args, **kwargs):
-        """Initialize."""
-        super().__init__(*args, **kwargs)
-        for key, item in kwargs.items():
-            setattr(self, key, item)
 
     @staticmethod
     def write(file_path, exclude_approved_formats=False, **kwargs):
@@ -28,7 +23,7 @@ class ValidationWriter(WriterBase):
             exclude_approved_formats (bool): False | True. If True only disapproved tests will
                                                            be included in the file.
         """
-        log_copy = ValidatorLog.log.copy()
+        log_copy = copy.deepcopy(ValidatorLog.log)
         if exclude_approved_formats:
             for key, item in log_copy.items():
                 if 'formats' in item:

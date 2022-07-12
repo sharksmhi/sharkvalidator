@@ -1,0 +1,39 @@
+description: Check data formats (eg. "SDATE" = "%Y-%m-%d" , -2.5 <= "TEMP_CTD"<= 30).
+name: formats
+validator: !!python/name:sharkvalidator.validators.formats.FormatValidator ''
+format_validators:
+    code:
+        validator: !!python/name:sharkvalidator.validators.formats.CodeValidator ''
+        path_to_codelist: "etc/codelist_SMHI.xlsx"
+    datetime:
+        validator: !!python/name:sharkvalidator.validators.formats.DateTimeValidator ''
+    free_text:
+        validator: !!python/name:sharkvalidator.validators.formats.FreeTextValidator ''
+    position:
+        validator: !!python/name:sharkvalidator.validators.formats.PositionValidator ''
+    range:
+        validator: !!python/name:sharkvalidator.validators.formats.RangeValidator ''
+
+parameters:
+    STATN:
+        format_validator: free_text
+    COMNT_VISIT:
+        format_validator: free_text
+    SMPNO:
+        format_validator: free_text
+    COMNT_SAMP:
+        format_validator: free_text
+    COMNT_SMPM:
+        format_validator: free_text
+    MET_COMNT:
+        format_validator: free_text
+    UNCERT:
+        format_validator: free_text
+    METCU:
+        format_validator: free_text
+    LMQNT:
+        format_validator: free_text
+    DETLI:
+        format_validator: free_text
+    RANA:
+        format_validator: free_text

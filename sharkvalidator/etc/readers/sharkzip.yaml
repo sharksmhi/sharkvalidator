@@ -1,6 +1,6 @@
 description: Reader for zip files according to SHARKzip format
-name: phytop_sharkzip
-data_type: phytoplankton
+name: sharkzip
+data_type: zips
 reader: !!python/name:sharkvalidator.readers.shark.SharkzipReader ''
 files_startswith: 'SHARK_'
 elements:
