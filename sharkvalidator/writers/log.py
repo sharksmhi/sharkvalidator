@@ -6,6 +6,7 @@ Created on 2021-01-08 13:37
 @author: johannes
 """
 import yaml
+import copy
 from sharkvalidator.writers.writer import WriterBase
 from sharkvalidator.validators.validator import ValidatorLog
 
@@ -22,7 +23,7 @@ class ValidationWriter(WriterBase):
             exclude_approved_formats (bool): False | True. If True only disapproved tests will
                                                            be included in the file.
         """
-        log_copy = ValidatorLog.log.copy()
+        log_copy = copy.deepcopy(ValidatorLog.log)
         if exclude_approved_formats:
             for key, item in log_copy.items():
                 if 'formats' in item:
