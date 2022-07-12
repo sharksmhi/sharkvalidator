@@ -94,9 +94,12 @@ class SharkzipReader(BaseSHARK):
                 df = self.eliminate_empty_rows(df)
             except Exception:
                 df = None
-                print('Activated zipfile contains unreadable file: {} '
-                      'from package: {}'.format(
-                    fid, Path(self.file.filename).name))
+                print(
+                    'Activated zipfile contains unreadable file: {} '
+                    'from package: {}'.format(
+                        fid, Path(self.file.filename).name
+                    )
+                )
         else:
             df = None
             print('Activated zipfile does not contain file: {}'.format(fid))

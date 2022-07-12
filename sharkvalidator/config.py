@@ -131,9 +131,7 @@ class Settings:
         """
         if os.path.isfile(name):
             if isinstance(value, dict) and (
-                    'readers' in name or
-                    'writers' in name or
-                    'validators' in name
+                'readers' in name or 'writers' in name or 'validators' in name
             ):
                 if 'readers' in name:
                     recursive_dict_update(self.readers,
