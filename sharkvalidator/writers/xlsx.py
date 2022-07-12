@@ -6,6 +6,7 @@ Created on 2021-10-08 11:26
 
 @author: johannes
 """
+import copy
 import pandas as pd
 from sharkvalidator.writers.writer import WriterBase
 from sharkvalidator.validators.validator import ValidatorLog
@@ -22,7 +23,7 @@ class ExcelWriter(WriterBase):
             exclude_approved_formats (bool): False | True. If True only disapproved tests will
                                                            be included in the file.
         """
-        log_copy = ValidatorLog.log.copy()
+        log_copy = copy.deepcopy(ValidatorLog.log)
         if exclude_approved_formats:
             for key, item in log_copy.items():
                 if 'formats' in item:
@@ -51,23 +52,25 @@ class ExcelWriter(WriterBase):
             'comnt': [],
         }
         for delivery, item in data.items():
-            for key_element, item_element in item['elements'].items():
-                if any(item_element) and key_element == 'disapproved':
-                    for key_type, item_type in item_element.items():
-                        out_dict['delivery'].append(delivery)
-                        out_dict['validator'].append('elements')
-                        out_dict['type'].append(key_type)
-                        out_dict['field'].append('')
-                        out_dict['comnt'].append(item_type)
-
-            for validator_key in ('essentials', 'formats'):
-                for key_element, item_element in item[validator_key].items():
+            if 'elements' in item:
+                for key_element, item_element in item['elements'].items():
                     if any(item_element) and key_element == 'disapproved':
                         for key_type, item_type in item_element.items():
                             out_dict['delivery'].append(delivery)
-                            out_dict['validator'].append(validator_key)
-                            typ, field = key_type.split(' - ')
-                            out_dict['type'].append(typ)
-                            out_dict['field'].append(field)
+                            out_dict['validator'].append('elements')
+                            out_dict['type'].append(key_type)
+                            out_dict['field'].append('')
                             out_dict['comnt'].append(item_type)
+
+            for validator_key in ('essentials', 'formats'):
+                if validator_key in item:
+                    for key_element, item_element in item[validator_key].items():
+                        if any(item_element) and key_element == 'disapproved':
+                            for key_type, item_type in item_element.items():
+                                out_dict['delivery'].append(delivery)
+                                out_dict['validator'].append(validator_key)
+                                typ, field = key_type.split(' - ')
+                                out_dict['type'].append(typ)
+                                out_dict['field'].append(field)
+                                out_dict['comnt'].append(item_type)
         return out_dict
