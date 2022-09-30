@@ -25,19 +25,19 @@ if __name__ == '__main__':
     #     delivery_name='phyto_zip',
     # )
 
-    # app.read(
-    #     r'..\2022-04-13 0742-2022-LANDSKOD 77-FARTYGSKOD 10',
-    #     reader='phyche_lims',
-    #     delivery_name='phyche_delivery',
-    # )
+    app.read(
+        r'..\9-Sep\data_exporter\2022-09-28 1409-2022-LANDSKOD 77-FARTYGSKOD 10',
+        reader='phyche_lims',
+        delivery_name='phyche_delivery',
+    )
 
-    wd = r'..\FysKem\NATIONELLA_Data\2021\BAS_EXT_SYK_SMHI\helår'
-    for direc in os.listdir(wd):
-        app.read(
-            '/'.join((wd, direc)),
-            reader='phyche_lims',
-            delivery_name=direc,
-        )
+    # wd = r'..2022\BAS_EXT_SYK_SMHI\7-Jul\data_exporter'
+    # for direc in os.listdir(wd):
+    #     app.read(
+    #         '/'.join((wd, direc)),
+    #         reader='phyche_lims',
+    #         delivery_name=direc,
+    #     )
 
     # app.read(
     #     'C:/Temp/DV/validator_test/Format_Skärgårdsprover 2020 vpl_SMHI.xlsx',
@@ -47,8 +47,8 @@ if __name__ == '__main__':
 
     # app.validate('svab_phyto', disapproved_only=True)
     # app.validate('phyche', disapproved_only=True)
-    # app.validate('phyche_delivery', disapproved_only=True)
-    app.validate(*os.listdir(wd), disapproved_only=True)
+    app.validate('phyche_delivery', disapproved_only=True)
+    # app.validate(*os.listdir(wd), disapproved_only=True)
     # app.validate('phyto_sw', disapproved_only=True)
     # app.validate('phyto_zip',
     #              validator_list=['formats'],
